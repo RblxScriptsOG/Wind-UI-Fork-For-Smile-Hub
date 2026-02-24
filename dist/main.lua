@@ -4,7 +4,7 @@
     | |/ |/ / / _ \/ _  / /_/ // /  
     |__/|__/_/_//_/\_,_/\____/___/
     
-    v1.6.64  |  2026-01-23  |  Roblox UI Library for scripts
+    v1.6.64  |  2026-02-24  |  Roblox UI Library for scripts
     
     To view the source code, see the `src/` folder on the official GitHub repository.
     
@@ -321,6 +321,10 @@ Tooltip=Color3.fromHex"4C4C4C",
 TooltipText="White",
 TooltipSecondary="Primary",
 TooltipSecondaryText="White",
+
+TabSectionIcon="Icon",
+
+SectionIcon="Icon",
 
 SectionExpandIcon="White",
 SectionExpandIconTransparency=.4,
@@ -3146,7 +3150,7 @@ end)
 
 ah.AddParent=function(al)
 ab.AddSignal(al:GetPropertyChangedSignal"Visible",function()
-ah.SetVisibility(al.Visible)
+
 end)
 end
 
@@ -3159,7 +3163,6 @@ ah.Model=aj
 
 return ah
 end end function a.r()
-
 
 
 local aa=a.load'c'
@@ -9095,6 +9098,7 @@ __type="Section",
 Title=ak.Title or"Section",
 Desc=ak.Desc,
 Icon=ak.Icon,
+IconThemed=ak.IconThemed,
 TextXAlignment=ak.TextXAlignment or"Left",
 TextSize=ak.TextSize or 19,
 DescTextSize=ak.DescTextSize or 16,
@@ -9129,7 +9133,9 @@ ao..":"..al.Title,
 0,
 ak.Window.Folder,
 al.__type,
-true
+true,
+al.IconThemed,
+"SectionIcon"
 )
 am.Size=UDim2.new(0,al.IconSize,0,al.IconSize)
 end
@@ -10341,7 +10347,8 @@ ap.Icon,
 am,
 "Section",
 true,
-ap.IconThemed
+ap.IconThemed,
+"TabSectionIcon"
 )
 
 aq.Size=UDim2.new(0,ap.IconSize,0,ap.IconSize)
@@ -12950,7 +12957,7 @@ end
 
 
 return au
-end end end
+end end function a.aa()
 
 local aa=game:GetService"RunService"
 local ae={
@@ -13338,4 +13345,775 @@ end
 return f
 end
 
-return ae
+return ae end end
+
+
+
+
+local aa=a.load'aa'
+
+local ae=aa:Localization{
+Enabled=true,
+Prefix="loc:",
+DefaultLanguage="en",
+Translations={en=
+{WINDUI_EXAMPLE=
+"WindUI Example",WELCOME=
+"Welcome to WindUI!",LIB_DESC=
+"Beautiful UI library for Roblox",SETTINGS=
+"Settings",APPEARANCE=
+"Appearance",FEATURES=
+"Features",UTILITIES=
+"Utilities",UI_ELEMENTS=
+"UI Elements",CONFIGURATION=
+"Configuration",SAVE_CONFIG=
+"Save Configuration",LOAD_CONFIG=
+"Load Configuration",THEME_SELECT=
+"Select Theme",TRANSPARENCY=
+"Window Transparency",LOCKED_TAB=
+"Locked Tab"
+}
+}
+}
+
+
+aa.TransparencyValue=0.2
+aa:SetTheme"Dark"
+
+local function gradient(af,ah,aj)
+local ak=""
+for am=1,#af do
+local an=(am-1)/(#af-1)
+local ap=math.floor((ah.R+(aj.R-ah.R)*an)*255)
+local aq=math.floor((ah.G+(aj.G-ah.G)*an)*255)
+local ar=math.floor((ah.B+(aj.B-ah.B)*an)*255)
+ak=ak..string.format('<font color="rgb(%d,%d,%d)">%s</font>',ap,aq,ar,af:sub(am,am))
+end
+return ak
+end
+
+aa:Popup{
+Title=gradient("WindUI Demo",Color3.fromHex"#6A11CB",Color3.fromHex"#2575FC"),
+Icon="sparkles",
+Content="loc:LIB_DESC",
+Buttons={
+{
+Title="Get Started",
+Icon="arrow-right",
+Variant="Primary",
+Callback=function()end
+}
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local af=aa:CreateWindow{
+Title="loc:WINDUI_EXAMPLE",
+Icon="geist:window",
+Author="loc:WELCOME",
+Folder="WindUI_Example",
+Size=UDim2.fromOffset(580,490),
+Theme="Dark",
+
+HidePanelBackground=false,
+NewElements=false,
+
+
+
+
+
+
+
+
+
+User={
+Enabled=true,
+Anonymous=true,
+Callback=function()
+aa:Notify{
+Title="User Profile",
+Content="User profile clicked!",
+Duration=3
+}
+end
+},
+Acrylic=false,
+HideSearchBar=false,
+SideBarWidth=200,
+
+OpenButton={
+Title="Open .ftgs hub UI",
+CornerRadius=UDim.new(1,0),
+StrokeThickness=3,
+Enabled=true,
+OnlyMobile=false,
+
+Color=ColorSequence.new(
+Color3.fromHex"#30FF6A",
+Color3.fromHex"#e7ff2f"
+),
+
+
+
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+af.User:SetAnonymous(true)
+
+
+
+
+
+af:SetIconSize(48)
+
+af:Tag{
+Title="v1.6.4",
+Color=Color3.fromHex"#30ff6a"
+}
+af:Tag{
+Title="Beta",
+Color=Color3.fromHex"#315dff"
+}
+local ah=af:Tag{
+Title="--:--",
+Radius=0,
+
+Color=aa:Gradient({
+["0"]={Color=Color3.fromHex"#FF0F7B",Transparency=0},
+["100"]={Color=Color3.fromHex"#F89B29",Transparency=0},
+},{
+Rotation=45,
+}),
+}
+
+
+local aj=0
+
+
+task.spawn(function()
+while true do
+local ak=os.date"*t"
+local am=string.format("%02d",ak.hour)
+local an=string.format("%02d",ak.min)
+
+aj=(aj+0.01)%1
+Color3.fromHSV(aj,1,1)
+
+ah:SetTitle(am..":"..an)
+
+
+task.wait(0.06)
+end
+end)
+
+
+af:CreateTopbarButton("theme-switcher","moon",function()
+aa:SetTheme(aa:GetCurrentTheme()=="Dark"and"Light"or"Dark")
+aa:Notify{
+Title="Theme Changed",
+Content="Current theme: "..aa:GetCurrentTheme(),
+Duration=2
+}
+end,990)
+
+local ak={
+Main=af:Section{Title="loc:FEATURES",Opened=true},
+Settings=af:Section{Title="loc:SETTINGS",Opened=true},
+Utilities=af:Section{Title="loc:UTILITIES",Opened=true}
+}
+
+local am={
+Elements=ak.Main:Tab{Title="loc:UI_ELEMENTS",Icon="layout-grid",Desc="UI Elements Example"},
+Appearance=ak.Settings:Tab{Title="loc:APPEARANCE",Icon="brush"},
+Config=ak.Utilities:Tab{Title="loc:CONFIGURATION",Icon="settings"},
+LockedTab1=af:Tab{Title="loc:LOCKED_TAB",Icon="bird",Locked=true,},
+LockedTab2=af:Tab{Title="loc:LOCKED_TAB",Icon="bird",Locked=true,},
+LockedTab3=af:Tab{Title="loc:LOCKED_TAB",Icon="bird",Locked=true,},
+LockedTab4=af:Tab{Title="loc:LOCKED_TAB",Icon="bird",Locked=true,},
+LockedTab5=af:Tab{Title="loc:LOCKED_TAB",Icon="bird",Locked=true,},
+}
+
+
+
+
+
+
+
+
+
+am.Elements:Section{
+Title="Interactive Components",
+TextSize=20,
+}
+
+am.Elements:Section{
+Title="Explore WindUI's powerful elements",
+TextSize=16,
+TextTransparency=.25,
+}
+
+
+am.Elements:Divider()
+
+local an=am.Elements:Section{
+Title="Section Example",
+Icon="bird",
+TextXAlignment="Center",
+Opened=true,
+Box=true,
+}
+
+am.Elements:Section{
+Title="Section Example 2",
+
+TextXAlignment="Center",
+Opened=true,
+Box=true,
+}
+
+am.Elements:Section{
+Title="Section Example 2",
+
+TextXAlignment="Center",
+Opened=true,
+
+}
+
+local ap=false
+an:Toggle{
+Title="Enable Features",
+
+Flag="featureToggle",
+Value=false,
+Callback=function(aq)
+ap=aq
+aa:Notify{
+Title="Features",
+Content=aq and"Features Enabled"or"Features Disabled",
+Icon=aq and"check"or"x",
+Duration=2
+}
+end
+}
+
+local aq=an:Slider{
+Title="Effect Intensity",
+Desc="Adjust the effect strength",
+Flag="intensitySlider",
+Value={Min=0,Max=100,Default=50},
+Callback=function(aq)
+print("Intensity set to:",aq)
+end
+}
+
+aq:SetMin(20)
+aq:SetMax(200)
+aq:Set(100)
+
+
+local ar={}
+local as={}
+
+
+local at=aa.Creator.Icons.Icons.lucide
+local au={}
+
+for av,aw in next,at do
+table.insert(au,av)
+end
+
+for av=1,80 do
+local aw=au[math.random(1,#au)]
+table.insert(ar,{Title="Test "..av,Icon=aw})
+end
+
+for av=1,2 do
+table.insert(as,"Test "..av)
+end
+
+an:Space()
+
+
+an:Dropdown{
+Title="Dropdown test",
+Values=ar,
+Flag="testDropdown",
+SearchBarEnabled=true,
+Value="Test 1",
+Callback=function(av)
+
+
+
+
+
+end
+}
+
+an:Dropdown{
+Title="Dropdown test 2",
+Flag="testDropdown2",
+Values={
+{
+Title="Test 1",
+Icon="bird",
+},
+{
+Title="Test 2",
+Icon="house",
+},
+{
+Title="Test 3",
+Icon="droplet",
+},
+{
+Title="Test 4",
+Icon="user",
+},
+},
+SearchBarEnabled=true,
+Value="Test 1",
+Callback=function(av)
+print("Selected: "..av.Title.." with icon: "..av.Icon)
+end
+}
+
+local av=an:Dropdown{
+Title="Dropdown test 3",
+Flag="testDropdown3",
+Values=ar,
+SearchBarEnabled=true,
+Value="Test 1",
+Callback=function(av)
+
+
+
+
+
+end
+}
+
+
+av:Refresh(as)
+
+an:Divider()
+
+an:Button{
+Title="Show Notification",
+Icon="bell",
+Callback=function()
+aa:Notify{
+Title="Hello WindUI!",
+Content="This is a sample notification",
+Icon="bell",
+Duration=3
+}
+end
+}
+
+an:Colorpicker{
+Title="Select Color",
+
+Default=Color3.fromHex"#30ff6a",
+Transparency=0,
+Callback=function(aw,ax)
+aa:Notify{
+Title="Color Changed",
+Content="New color: "..aw:ToHex().."\nTransparency: "..ax,
+Duration=2
+}
+end
+}
+
+an:Code{
+Title="my_code.luau",
+Code=[[print("Hello world!")]],
+OnCopy=function()
+print"Copied to clipboard!"
+end
+}
+
+am.Appearance:Paragraph{
+Title="Customize Interface",
+Desc="Personalize your experience",
+Image="palette",
+ImageSize=20,
+Color="White"
+}
+
+local aw={}
+for ax,ay in pairs(aa:GetThemes())do
+table.insert(aw,ax)
+end
+table.sort(aw)
+
+local ax=true
+local ay=true
+
+
+
+local az=am.Appearance:Dropdown{
+Title="loc:THEME_SELECT",
+Values=aw,
+Flag="themeDropdown",
+SearchBarEnabled=true,
+MenuWidth=280,
+Value="Dark",
+Callback=function(az)
+ay=false
+aa:SetTheme(az)
+aa:Notify{
+Title="Theme Applied",
+Content=az,
+Icon="palette",
+Duration=2
+}
+ay=true
+end
+}
+
+am.Appearance:Slider{
+Title="loc:TRANSPARENCY",
+Value={
+Min=0,
+Max=1,
+Default=0,
+},
+Flag="transparencySlider",
+Step=0.1,
+Callback=function(aA)
+af:SetBackgroundTransparency(aA)
+af:SetBackgroundImageTransparency(aA)
+end
+}
+
+local aA=am.Appearance:Toggle{
+Title="Enable Dark Mode",
+Desc="Use dark color scheme",
+Value=true,
+Callback=function(aA)
+if ax then
+aa:SetTheme(aA and"Dark"or"Light")
+end
+if ay then
+az:Select(aA and"Dark"or"Light")
+end
+end
+}
+
+aa:OnThemeChange(function(aB)
+ax=false
+aA:Set(aB=="Dark")
+ax=true
+end)
+
+
+am.Appearance:Button{
+Title="Create New Theme",
+Icon="plus",
+Callback=function()
+af:Dialog{
+Title="Create Theme",
+Content="This feature is coming soon!",
+Buttons={
+{
+Title="OK",
+Variant="Primary"
+}
+}
+}
+end
+}
+
+am.Config:Paragraph{
+Title="Configuration Manager",
+Desc="Save and load your settings",
+Image="save",
+ImageSize=20,
+Color="White"
+}
+
+local aB="default"
+local b
+local d={
+name="Player1",
+level=1,
+inventory={"sword","shield","potion"}
+}
+
+local f=am.Config:Input{
+Title="Config Name",
+Value=aB,
+Callback=function(f)
+aB=f or"default"
+end
+}
+
+local g=af.ConfigManager
+
+am.Config:Dropdown{
+Title="Select Config",
+Values=g:AllConfigs(),
+Value=aB,
+AllowNone=false,
+Callback=function(h)
+aB=h or"default"
+f:Set(aB)
+end
+}
+
+if g then
+g:Init(af)
+
+am.Config:Space{Columns=0}
+
+am.Config:Button{
+Title="loc:SAVE_CONFIG",
+Icon="save",
+IconAlign="Left",
+Justify="Center",
+Color=Color3.fromHex"315dff",
+Callback=function()
+b=g:CreateConfig(aB)
+
+
+
+
+
+
+
+b:Set("playerData",d)
+b:Set("lastSave",os.date"%Y-%m-%d %H:%M:%S")
+
+if b:Save()then
+aa:Notify{
+Title="loc:SAVE_CONFIG",
+Content="Saved as: "..aB,
+Icon="check",
+Duration=3
+}
+else
+aa:Notify{
+Title="Error",
+Content="Failed to save config",
+Icon="x",
+Duration=3
+}
+end
+end
+}
+
+am.Config:Space{Columns=-1}
+
+
+am.Config:Button{
+Title="loc:LOAD_CONFIG",
+IconAlign="Left",
+Justify="Center",
+Color=Color3.fromHex"315dff",
+Icon="folder",
+Callback=function()
+b=g:CreateConfig(aB)
+local h=b:Load()
+
+if h then
+if h.playerData then
+d=h.playerData
+end
+
+local j=h.lastSave or"Unknown"
+aa:Notify{
+Title="loc:LOAD_CONFIG",
+Content="Loaded: "..aB.."\nLast save: "..j,
+Icon="refresh-cw",
+Duration=5
+}
+
+am.Config:Paragraph{
+Title="Player Data",
+Desc=string.format("Name: %s\nLevel: %d\nInventory: %s",
+d.name,
+d.level,
+table.concat(d.inventory,", "))
+}
+else
+aa:Notify{
+Title="Error",
+Content="Failed to load config",
+Icon="x",
+Duration=3
+}
+end
+end
+}
+
+am.Config:Space{Columns=0}
+
+else
+am.Config:Paragraph{
+Title="Config Manager Not Available",
+Desc="This feature requires ConfigManager",
+Image="alert-triangle",
+ImageSize=20,
+Color="White"
+}
+end
+
+
+af:Section{Title="WindUI "..aa.Version}
+am.Config:Paragraph{
+Title="Github Repository",
+Desc="github.com/Footagesus/WindUI",
+Image="github",
+ImageSize=20,
+Color="Grey",
+Buttons={
+{
+Title="Copy Link",
+Icon="copy",
+Variant="Tertiary",
+Callback=function()
+setclipboard"https://github.com/Footagesus/WindUI"
+aa:Notify{
+Title="Copied!",
+Content="GitHub link copied to clipboard",
+Duration=2
+}
+end
+}
+}
+}
+
+af:OnClose(function()
+print"Window closed"
+
+if g and b then
+b:Set("playerData",d)
+b:Set("lastSave",os.date"%Y-%m-%d %H:%M:%S")
+b:Save()
+print"Config auto-saved on close"
+end
+end)
+
+af:OnDestroy(function()
+print"Window destroyed"
+end)
+
+af:OnOpen(function()
+print"Window opened"
+end)
+
+
+
+
+af:UnlockAll()
+
+
+
+
+
+task.wait(0.05)
+
+
+
+if af:GetUnlocked()and#af:GetUnlocked()>0 then
+print"Locked Elements in Window: "
+for h,j in next,af:GetUnlocked()do
+local l=j.Title
+if string.find(l,ae.Prefix)then
+local m=ae.Translations[aa.Creator.Language]or ae.Translations[ae.DefaultLanguage]
+l=m[l:gsub("^"..ae.Prefix,"")]
+end
+print("- "..(l or"Unknown"))
+end
+
+end
