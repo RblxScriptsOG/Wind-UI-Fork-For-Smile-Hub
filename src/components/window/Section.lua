@@ -29,7 +29,8 @@ function Section.New(SectionConfig, Parent, Folder, UIScale, Window)
             Folder,
             "Section",
             true,
-            SectionModule.IconThemed
+            SectionModule.IconThemed,
+            "TabSectionIcon"
         )
         
         IconFrame.Size = UDim2.new(0,SectionModule.IconSize,0,SectionModule.IconSize)

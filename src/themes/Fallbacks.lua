@@ -81,6 +81,10 @@ return {
     TooltipText = "White",
     TooltipSecondary = "Primary",
     TooltipSecondaryText = "White",
+
+    TabSectionIcon = "Icon",
+
+    SectionIcon = "Icon",
     
     SectionExpandIcon = "White",
     SectionExpandIconTransparency = .4,

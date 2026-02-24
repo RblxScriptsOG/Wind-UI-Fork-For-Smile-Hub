@@ -10,6 +10,7 @@ function Element:New(Config)
         Title = Config.Title or "Section",
         Desc = Config.Desc,
         Icon = Config.Icon,
+        IconThemed = Config.IconThemed,
         TextXAlignment = Config.TextXAlignment or "Left",
         TextSize = Config.TextSize or 19,
         DescTextSize = Config.DescTextSize or 16,
@@ -44,7 +45,9 @@ function Element:New(Config)
                 0,
                 Config.Window.Folder,
                 Section.__type,
-                true
+                true, 
+                Section.IconThemed,
+                "SectionIcon",
             )
             Icon.Size = UDim2.new(0,Section.IconSize,0,Section.IconSize)
         end
