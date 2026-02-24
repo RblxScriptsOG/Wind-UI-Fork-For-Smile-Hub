@@ -47,7 +47,7 @@ function Element:New(Config)
                 Section.__type,
                 true, 
                 Section.IconThemed,
-                "SectionIcon",
+                "SectionIcon"
             )
             Icon.Size = UDim2.new(0,Section.IconSize,0,Section.IconSize)
         end
