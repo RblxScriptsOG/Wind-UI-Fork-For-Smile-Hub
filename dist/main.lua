@@ -584,7 +584,19 @@ local function getValue(v,x)
 if typeof(x)~="table"then
 return nil
 end
-local z=x[v]
+local z=rawget(x,v)
+if z==nil and typeof(v)=="string"then
+local A=string.gsub(v,"%s+","")
+if A~=v then
+z=rawget(x,A)
+end
+if z==nil then
+local B=string.gsub(v,"([a-z])([A-Z])","%1 %2")
+if B~=v then
+z=rawget(x,B)
+end
+end
+end
 
 if z==nil then return nil end
 

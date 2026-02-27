@@ -230,7 +230,21 @@ function Creator.GetThemeProperty(Property, Theme)
             return nil
         end
 
-        local value = themeTable[prop]
+        -- Accept legacy/spaced keys (e.g. "Panel Background") and avoid metamethod side effects.
+        local value = rawget(themeTable, prop)
+        if value == nil and typeof(prop) == "string" then
+            local compactProp = string.gsub(prop, "%s+", "")
+            if compactProp ~= prop then
+                value = rawget(themeTable, compactProp)
+            end
+
+            if value == nil then
+                local spacedProp = string.gsub(prop, "([a-z])([A-Z])", "%1 %2")
+                if spacedProp ~= prop then
+                    value = rawget(themeTable, spacedProp)
+                end
+            end
+        end
         
         if value == nil then return nil end
         
