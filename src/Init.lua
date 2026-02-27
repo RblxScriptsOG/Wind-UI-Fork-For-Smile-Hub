@@ -64,7 +64,7 @@ local UIScaleObj = New("UIScale", {
 WindUI.UIScaleObj = UIScaleObj
 
 WindUI.ScreenGui = New("ScreenGui", {
-    Name = "WindUI",
+    Name = "SmileHub",
     Parent = GUIParent,
     IgnoreGuiInset = true,
     ScreenInsets = "None",
@@ -91,17 +91,17 @@ WindUI.ScreenGui = New("ScreenGui", {
 })
 
 WindUI.NotificationGui = New("ScreenGui", {
-    Name = "WindUI/Notifications",
+    Name = "SmileHub/Notifications",
     Parent = GUIParent,
     IgnoreGuiInset = true,
 })
 WindUI.DropdownGui = New("ScreenGui", {
-    Name = "WindUI/Dropdowns",
+    Name = "SmileHub/Dropdowns",
     Parent = GUIParent,
     IgnoreGuiInset = true,
 })
 WindUI.TooltipGui = New("ScreenGui", {
-    Name = "WindUI/Tooltips",
+    Name = "SmileHub/Tooltips",
     Parent = GUIParent,
     IgnoreGuiInset = true,
 })
@@ -279,9 +279,12 @@ function WindUI:CreateWindow(Config)
     
     local CanLoadWindow = true
     
-    local Theme = WindUI.Themes[Config.Theme or "SmileGlass"]
-    
-    --WindUI.Theme = Theme
+    local Theme = WindUI.Themes[Config.Theme] or WindUI.Theme or WindUI.Themes["SmileGlass"] or WindUI.Themes["Dark"]
+
+    if Config.Theme and not WindUI.Themes[Config.Theme] then
+        warn(string.format("SmileHub: theme '%s' was not found, using fallback theme", tostring(Config.Theme)))
+    end
+
     Creator.SetTheme(Theme)
     
     

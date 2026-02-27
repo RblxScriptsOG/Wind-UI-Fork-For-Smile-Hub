@@ -510,7 +510,7 @@ if not u then
 if m and m.Window and m.Window.Debug then local
 x, z=v:find":%d+: "
 
-warn("[ WindUI: DEBUG Mode ] "..v)
+warn("[ SmileHub: DEBUG Mode ] "..v)
 
 return m:Notify{
 Title="DEBUG Mode: Error",
@@ -560,6 +560,9 @@ return z
 end
 
 function p.SetTheme(r)
+if typeof(r)~="table"then
+r=(p.Themes and p.Themes.Dark)or r
+end
 p.Theme=r
 p.UpdateTheme(nil,false)
 end
@@ -578,6 +581,9 @@ end
 
 function p.GetThemeProperty(r,u)
 local function getValue(v,x)
+if typeof(x)~="table"then
+return nil
+end
 local z=x[v]
 
 if z==nil then return nil end
@@ -626,10 +632,11 @@ return getValue(r,{[r]=x})
 end
 end
 
-v=getValue(r,p.Themes.Dark)
+local darkTheme=p.Themes and p.Themes.Dark or nil
+v=getValue(r,darkTheme)
 if v~=nil then
 if typeof(v)=="string"and string.sub(v,1,1)~="#"then
-local z=p.GetThemeProperty(v,p.Themes.Dark)
+local z=p.GetThemeProperty(v,darkTheme)
 if z~=nil then
 return z
 end
@@ -640,7 +647,7 @@ end
 
 if x~=nil then
 if typeof(x)=="string"and string.sub(x,1,1)~="#"then
-return p.GetThemeProperty(x,p.Themes.Dark)
+return p.GetThemeProperty(x,darkTheme)
 else
 return getValue(r,{[r]=x})
 end
@@ -1088,7 +1095,7 @@ local M,N=pcall(getcustomasset,J)
 if M then
 H.ImageLabel.Image=N
 else
-warn(string.format("[ WindUI.Creator ] Failed to load custom asset '%s': %s",J,tostring(N)))
+warn(string.format("[ SmileHub.Creator ] Failed to load custom asset '%s': %s",J,tostring(N)))
 H:Destroy()
 
 return
@@ -1096,7 +1103,7 @@ end
 end)
 end)
 if not L then
-warn("[ WindUI.Creator ]  '"..identifyexecutor()or"Studio".."' doesnt support the URL Images. Error: "..M)
+warn("[ SmileHub.Creator ]  '"..identifyexecutor()or"Studio".."' doesnt support the URL Images. Error: "..M)
 
 H:Destroy()
 end
@@ -4413,11 +4420,11 @@ end
 
 function ae.Init(af,ag)
 if not ag.Folder then
-warn"[ WindUI.ConfigManager ] Window.Folder is not specified."
+warn"[ SmileHub.ConfigManager ] Window.Folder is not specified."
 return false
 end
 if ab:IsStudio()or not writefile then
-warn"[ WindUI.ConfigManager ] The config system doesn't work in the studio."
+warn"[ SmileHub.ConfigManager ] The config system doesn't work in the studio."
 return false
 end
 
@@ -4442,7 +4449,7 @@ end
 
 function ae.SetPath(af,ag)
 if not ag then
-warn"[ WindUI.ConfigManager ] Custom path is not specified."
+warn"[ SmileHub.ConfigManager ] Custom path is not specified."
 return false
 end
 
@@ -4526,7 +4533,7 @@ end
 
 local ak,al=pcall(function()
 local ak=readfile or function()
-warn"[ WindUI.ConfigManager ] The config system doesn't work in the studio."
+warn"[ SmileHub.ConfigManager ] The config system doesn't work in the studio."
 return nil
 end
 return ac:JSONDecode(ak(ai.Path))
@@ -4613,9 +4620,9 @@ local al,am=pcall(function()
 return ai:Load()
 end)
 if al then
-if ad.Debug then print("[ WindUI.ConfigManager ] AutoLoaded config: "..ag)end
+if ad.Debug then print("[ SmileHub.ConfigManager ] AutoLoaded config: "..ag)end
 else
-warn("[ WindUI.ConfigManager ] Failed to AutoLoad config: "..ag.." - "..tostring(am))
+warn("[ SmileHub.ConfigManager ] Failed to AutoLoad config: "..ag.." - "..tostring(am))
 end
 end)
 end
@@ -9635,7 +9642,7 @@ end)
 if aw then
 ah.PendingConfigData[ar.Flag]=nil
 else
-warn("[ WindUI ] Failed to apply pending config for '"..ar.Flag.."': "..tostring(ax))
+warn("[ SmileHub ] Failed to apply pending config for '"..ar.Flag.."': "..tostring(ax))
 end
 end)
 end
@@ -11551,7 +11558,7 @@ local m=al.Request{Url=h,Method="GET",Headers={["User-Agent"]="Roblox/Exploit"}}
 writefile(l,m.Body)
 end)
 if not m then
-warn("[ WindUI.Window.Background ] Failed to download video: "..tostring(p))
+warn("[ SmileHub.Window.Background ] Failed to download video: "..tostring(p))
 return
 end
 end
@@ -11560,10 +11567,10 @@ local m,p=pcall(function()
 return getcustomasset(l)
 end)
 if not m then
-warn("[ WindUI.Window.Background ] Failed to load custom asset: "..tostring(p))
+warn("[ SmileHub.Window.Background ] Failed to load custom asset: "..tostring(p))
 return
 end
-warn"[ WindUI.Window.Background ] VideoFrame may not work with custom video"
+warn"[ SmileHub.Window.Background ] VideoFrame may not work with custom video"
 h=p
 end
 
@@ -13025,7 +13032,7 @@ Scale=ae.Scale,
 ae.UIScaleObj=av
 
 ae.ScreenGui=aq("ScreenGui",{
-Name="WindUI",
+Name="SmileHub",
 Parent=au,
 IgnoreGuiInset=true,
 ScreenInsets="None",
@@ -13052,17 +13059,17 @@ Name="ToolTips"
 })
 
 ae.NotificationGui=aq("ScreenGui",{
-Name="WindUI/Notifications",
+Name="SmileHub/Notifications",
 Parent=au,
 IgnoreGuiInset=true,
 })
 ae.DropdownGui=aq("ScreenGui",{
-Name="WindUI/Dropdowns",
+Name="SmileHub/Dropdowns",
 Parent=au,
 IgnoreGuiInset=true,
 })
 ae.TooltipGui=aq("ScreenGui",{
-Name="WindUI/Tooltips",
+Name="SmileHub/Tooltips",
 Parent=au,
 IgnoreGuiInset=true,
 })
@@ -13240,7 +13247,10 @@ end
 
 local aA=true
 
-local aB=ae.Themes[ay.Theme or"Dark"]
+local aB=ae.Themes[ay.Theme]or ae.Theme or ae.Themes.Dark
+if ay.Theme and not ae.Themes[ay.Theme]then
+warn(string.format("SmileHub: theme '%s' was not found, using fallback theme",tostring(ay.Theme)))
+end
 
 
 ap.SetTheme(aB)

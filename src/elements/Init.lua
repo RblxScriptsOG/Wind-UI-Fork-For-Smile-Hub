@@ -50,7 +50,7 @@ return {
                                     if success then
                                         Window.PendingConfigData[config.Flag] = nil
                                     else
-                                        warn("[ WindUI ] Failed to apply pending config for '" .. config.Flag .. "': " .. tostring(err))
+                                        warn("[ SmileHub ] Failed to apply pending config for '" .. config.Flag .. "': " .. tostring(err))
                                     end
                                 end)
                             end

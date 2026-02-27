@@ -519,7 +519,7 @@ return function(Config)
                     writefile(videoPath, response.Body)
                 end)
                 if not success then
-                    warn("[ WindUI.Window.Background ] Failed to download video: " .. tostring(result))
+                    warn("[ SmileHub.Window.Background ] Failed to download video: " .. tostring(result))
                     return
                 end
             end
@@ -528,10 +528,10 @@ return function(Config)
                 return getcustomasset(videoPath)
             end)
             if not success then
-                warn("[ WindUI.Window.Background ] Failed to load custom asset: " .. tostring(customAsset))
+                warn("[ SmileHub.Window.Background ] Failed to load custom asset: " .. tostring(customAsset))
                 return
             end
-            warn("[ WindUI.Window.Background ] VideoFrame may not work with custom video")
+            warn("[ SmileHub.Window.Background ] VideoFrame may not work with custom video")
             BGVideo = customAsset
         end
     

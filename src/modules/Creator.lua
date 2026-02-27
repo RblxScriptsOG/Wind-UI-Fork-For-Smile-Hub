@@ -154,7 +154,7 @@ function Creator.SafeCallback(Function, ...)
         if WindUI and WindUI.Window and WindUI.Window.Debug then
             local _, i = Event:find(":%d+: ")
         
-            warn("[ WindUI: DEBUG Mode ] " .. Event)
+            warn("[ SmileHub: DEBUG Mode ] " .. Event)
             
             return WindUI:Notify({
                 Title = "DEBUG Mode: Error",
@@ -204,6 +204,10 @@ function Creator.Gradient(stops, props)
 end
 
 function Creator.SetTheme(Theme)
+    if typeof(Theme) ~= "table" then
+        Theme = (Creator.Themes and Creator.Themes["Dark"]) or Theme
+    end
+
     Creator.Theme = Theme
     Creator.UpdateTheme(nil, false)
 end
@@ -222,6 +226,10 @@ end
 
 function Creator.GetThemeProperty(Property, Theme)
     local function getValue(prop, themeTable)
+        if typeof(themeTable) ~= "table" then
+            return nil
+        end
+
         local value = themeTable[prop]
         
         if value == nil then return nil end
@@ -270,10 +278,12 @@ function Creator.GetThemeProperty(Property, Theme)
         end
     end
 
-    value = getValue(Property, Creator.Themes["Dark"])
+    local darkTheme = Creator.Themes and Creator.Themes["Dark"] or nil
+
+    value = getValue(Property, darkTheme)
     if value ~= nil then
         if typeof(value) == "string" and string.sub(value, 1, 1) ~= "#" then
-            local referencedValue = Creator.GetThemeProperty(value, Creator.Themes["Dark"])
+            local referencedValue = Creator.GetThemeProperty(value, darkTheme)
             if referencedValue ~= nil then
                 return referencedValue
             end
@@ -284,7 +294,7 @@ function Creator.GetThemeProperty(Property, Theme)
 
     if fallbackProperty ~= nil then
         if typeof(fallbackProperty) == "string" and string.sub(fallbackProperty, 1, 1) ~= "#" then
-            return Creator.GetThemeProperty(fallbackProperty, Creator.Themes["Dark"])
+            return Creator.GetThemeProperty(fallbackProperty, darkTheme)
         else
             return getValue(Property, {[Property] = fallbackProperty})
         end
@@ -732,7 +742,7 @@ function Creator.Image(Img, Name, Corner, Folder, Type, IsThemeTag, Themed, Them
                 if assetSuccess then
                     ImageFrame.ImageLabel.Image = asset
                 else
-                    warn(string.format("[ WindUI.Creator ] Failed to load custom asset '%s': %s", FileName, tostring(asset)))
+                    warn(string.format("[ SmileHub.Creator ] Failed to load custom asset '%s': %s", FileName, tostring(asset)))
                     ImageFrame:Destroy()
                     
                     return
@@ -740,7 +750,7 @@ function Creator.Image(Img, Name, Corner, Folder, Type, IsThemeTag, Themed, Them
             end)
         end)
         if not success then
-            warn("[ WindUI.Creator ]  '" .. identifyexecutor() or "Studio" .. "' doesnt support the URL Images. Error: " .. response)
+            warn("[ SmileHub.Creator ]  '" .. identifyexecutor() or "Studio" .. "' doesnt support the URL Images. Error: " .. response)
             
             ImageFrame:Destroy()
         end
