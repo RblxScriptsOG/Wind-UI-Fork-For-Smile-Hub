@@ -251,7 +251,7 @@ WindUI.Themes = require("./themes/Init")(WindUI)
 Creator.Themes = WindUI.Themes
 
 
-WindUI:SetTheme("Dark")
+WindUI:SetTheme("SmileGlass")
 WindUI:SetLanguage(Creator.Language)
 
 
@@ -279,7 +279,7 @@ function WindUI:CreateWindow(Config)
     
     local CanLoadWindow = true
     
-    local Theme = WindUI.Themes[Config.Theme or "Dark"]
+    local Theme = WindUI.Themes[Config.Theme or "SmileGlass"]
     
     --WindUI.Theme = Theme
     Creator.SetTheme(Theme)

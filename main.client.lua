@@ -72,11 +72,11 @@ end
 
 -- */  Window  /* --
 local Window = WindUI:CreateWindow({
-    Title = ".ftgs hub  |  WindUI Example",
-    --Author = "by .ftgs • Footagesus",
-    Folder = "ftgshub",
+    Title = "Smile Hub",
+    Author = "Smile Hub UI",
+    Folder = "smilehub",
     Icon = "solar:folder-2-bold-duotone",
-    --Theme = "Mellowsi",
+    Theme = "SmileGlass",
     --IconSize = 22*2,
     NewElements = true,
     --Size = UDim2.fromOffset(700,700),
@@ -84,17 +84,18 @@ local Window = WindUI:CreateWindow({
     HideSearchBar = false,
     
     OpenButton = {
-        Title = "Open .ftgs hub UI", -- can be changed
+        Title = "$",
         CornerRadius = UDim.new(1,0), -- fully rounded
-        StrokeThickness = 3, -- removing outline
+        StrokeThickness = 1,
         Enabled = true, -- enable or disable openbutton
-        Draggable = true,
+        Draggable = false,
+        OnlyIcon = true,
         OnlyMobile = false,
-        Scale = 0.5,
+        Scale = 1,
         
         Color = ColorSequence.new( -- gradient
-            Color3.fromHex("#30FF6A"), 
-            Color3.fromHex("#e7ff2f")
+            Color3.fromHex("#22c55e"),
+            Color3.fromHex("#16a34a")
         )
     },
     Topbar = {
@@ -334,9 +335,56 @@ local ElementsSection = Window:Section({
 local ConfigUsageSection = Window:Section({
     Title = "Config Usage",
 })
+local ThemesSection = Window:Section({
+    Title = "Themes",
+})
 local OtherSection = Window:Section({
     Title = "Other",
 })
+
+do
+    local ThemeTab = ThemesSection:Tab({
+        Title = "Theme Selector",
+        Icon = "palette",
+        IconColor = Green,
+        IconShape = "Square",
+        Border = true,
+    })
+
+    local SmileThemes = {
+        "SmileGlass",
+        "SmileEmerald",
+        "SmileCyan",
+        "SmileBlue",
+        "SmileViolet",
+        "SmileRose",
+        "SmileAmber",
+        "SmileLime",
+        "SmileOrange",
+        "SmileRuby",
+    }
+
+    ThemeTab:Section({
+        Title = "Smile Hub Themes",
+        TextSize = 18,
+    })
+
+    ThemeTab:Dropdown({
+        Title = "Theme",
+        Values = SmileThemes,
+        Value = "SmileGlass",
+        SearchBarEnabled = false,
+        Callback = function(themeName)
+            WindUI:SetTheme(themeName)
+            WindUI:Notify({
+                Title = "Theme Applied",
+                Content = "Now using " .. themeName,
+                Icon = "palette",
+                Duration = 3,
+            })
+        end
+    })
+end
 
 
 

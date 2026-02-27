@@ -31,9 +31,10 @@ function OpenButton.New(Window)
     -- })
 
     local Title = New("TextLabel", {
-        Text = Window.Title,
-        TextSize = 17,
-        FontFace = Font.new(Creator.Font, Enum.FontWeight.Medium),
+        Text = "$",
+        TextSize = 24,
+        TextColor3 = Color3.fromHex("#ffffff"),
+        FontFace = Font.new(Creator.Font, Enum.FontWeight.Bold),
         BackgroundTransparency = 1,
         AutomaticSize = "XY",
     })
@@ -42,6 +43,7 @@ function OpenButton.New(Window)
         Size = UDim2.new(0,44-8,0,44-8),
         BackgroundTransparency = 1, 
         Name = "Drag",
+        Visible = false,
     }, {
         New("ImageLabel", {
             Image = Creator.Icon("move")[1],
@@ -63,6 +65,7 @@ function OpenButton.New(Window)
         AnchorPoint = Vector2.new(0,0.5),
         BackgroundColor3 = Color3.new(1,1,1),
         BackgroundTransparency = .9,
+        Visible = false,
     })
 
     local Container = New("Frame", {
@@ -81,13 +84,13 @@ function OpenButton.New(Window)
     })
 
     local Button = New("Frame", {
-        Size = UDim2.new(0,0,0,44),
-        AutomaticSize = "X",
+        Size = UDim2.new(0,52,0,52),
+        AutomaticSize = "None",
         Parent = Container,
         Active = false,
-        BackgroundTransparency = .25,
+        BackgroundTransparency = 0,
         ZIndex = 99,
-        BackgroundColor3 = Color3.new(0,0,0),
+        BackgroundColor3 = Color3.fromHex("#16a34a"),
     }, {
         UIScale,
 	    New("UICorner", {
@@ -96,12 +99,8 @@ function OpenButton.New(Window)
         New("UIStroke", {
             Thickness = 1,
             ApplyStrokeMode = "Border",
-            Color = Color3.new(1,1,1),
-            Transparency = 0,
-        }, {
-            New("UIGradient", {
-                Color = ColorSequence.new(Color3.fromHex("40c9ff"), Color3.fromHex("e81cff"))
-            })
+            Color = Color3.fromHex("#22c55e"),
+            Transparency = 0.15,
         }),
         Drag,
         Divider,
@@ -113,10 +112,10 @@ function OpenButton.New(Window)
         }),
         
         New("TextButton",{
-            AutomaticSize = "XY",
+            AutomaticSize = "None",
             Active = true,
-            BackgroundTransparency = 1, -- .93
-            Size = UDim2.new(0,0,0,44-(4*2)),
+            BackgroundTransparency = 1,
+            Size = UDim2.new(1,-8,1,-8),
             --Position = UDim2.new(0,20+16+16+1,0,0),
             BackgroundColor3 = Color3.new(1,1,1),
         }, {
@@ -131,8 +130,8 @@ function OpenButton.New(Window)
             }),
             Title,
             New("UIPadding", {
-                PaddingLeft = UDim.new(0,7+4),
-                PaddingRight = UDim.new(0,7+4),
+                PaddingLeft = UDim.new(0,0),
+                PaddingRight = UDim.new(0,0),
             }),
         }),
         New("UIPadding", {
@@ -179,10 +178,10 @@ function OpenButton.New(Window)
     end)
     
     Creator.AddSignal(Button.TextButton.MouseEnter, function()
-        Tween(Button.TextButton, .1, {BackgroundTransparency = .93}):Play()
+        Tween(Button, .1, {BackgroundColor3 = Color3.fromHex("#22c55e")}):Play()
     end)
     Creator.AddSignal(Button.TextButton.MouseLeave, function()
-        Tween(Button.TextButton, .1, {BackgroundTransparency = 1}):Play()
+        Tween(Button, .1, {BackgroundColor3 = Color3.fromHex("#16a34a")}):Play()
     end)
     
     local DragModule = Creator.Drag(Container)
@@ -198,18 +197,18 @@ function OpenButton.New(Window)
     
     function OpenButtonMain:Edit(OpenButtonConfig)
         local OpenButtonModule = {
-            Title = OpenButtonConfig.Title,
+            Title = OpenButtonConfig.Title or "$",
             Icon = OpenButtonConfig.Icon,
             Enabled = OpenButtonConfig.Enabled,
             Position = OpenButtonConfig.Position,
-            OnlyIcon = OpenButtonConfig.OnlyIcon or false,
-            Draggable = OpenButtonConfig.Draggable or nil,
+            OnlyIcon = OpenButtonConfig.OnlyIcon ~= false,
+            Draggable = OpenButtonConfig.Draggable == true,
             OnlyMobile = OpenButtonConfig.OnlyMobile,
             CornerRadius = OpenButtonConfig.CornerRadius or UDim.new(1, 0),
-            StrokeThickness = OpenButtonConfig.StrokeThickness or 2,
+            StrokeThickness = OpenButtonConfig.StrokeThickness or 1,
             Scale = OpenButtonConfig.Scale or 1,
             Color = OpenButtonConfig.Color 
-                or ColorSequence.new(Color3.fromHex("40c9ff"), Color3.fromHex("e81cff")),
+                or ColorSequence.new(Color3.fromHex("#22c55e"), Color3.fromHex("#16a34a")),
         }
         
         -- wtf lol
@@ -219,9 +218,7 @@ function OpenButton.New(Window)
         end
         
         if OpenButtonModule.OnlyMobile ~= false then
-            OpenButtonModule.OnlyMobile = true
-        else
-            Window.IsPC = false
+            OpenButtonModule.OnlyMobile = false
         end
         
         
@@ -239,9 +236,9 @@ function OpenButton.New(Window)
         end
         
         if OpenButtonModule.OnlyIcon == true and Title then
-            Title.Visible = false
-            Button.TextButton.UIPadding.PaddingLeft = UDim.new(0,7)
-            Button.TextButton.UIPadding.PaddingRight = UDim.new(0,7)
+            Title.Visible = true
+            Button.TextButton.UIPadding.PaddingLeft = UDim.new(0,0)
+            Button.TextButton.UIPadding.PaddingRight = UDim.new(0,0)
         elseif OpenButtonModule.OnlyIcon == false then
             Title.Visible = true
             Button.TextButton.UIPadding.PaddingLeft = UDim.new(0,7+4)
@@ -263,10 +260,20 @@ function OpenButton.New(Window)
         
         if OpenButtonModule.Icon then
             OpenButtonMain:SetIcon(OpenButtonModule.Icon)
+        elseif Icon then
+            Icon:Destroy()
+            Icon = nil
         end
 
-        Button.UIStroke.UIGradient.Color = OpenButtonModule.Color
-        if Glow then
+        if Title then
+            Title.Text = OpenButtonModule.Title or "$"
+        end
+
+        local firstColor = OpenButtonModule.Color.Keypoints[1] and OpenButtonModule.Color.Keypoints[1].Value
+            or Color3.fromHex("#22c55e")
+        Button.BackgroundColor3 = firstColor
+        Button.UIStroke.Color = firstColor
+        if Glow and Glow:FindFirstChild("UIGradient") then
             Glow.UIGradient.Color = OpenButtonModule.Color
         end
 
