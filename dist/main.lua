@@ -4914,11 +4914,11 @@ end
 
 function ag.Edit(ap,aq)
 local ar={
-Title=aq.Title,
-Icon=aq.Icon,
+Title=nil,
+Icon=aq.Icon or af.Icon,
 Enabled=aq.Enabled,
 Position=aq.Position,
-OnlyIcon=aq.OnlyIcon or false,
+OnlyIcon=true,
 Draggable=aq.Draggable or nil,
 OnlyMobile=aq.OnlyMobile,
 CornerRadius=aq.CornerRadius or UDim.new(1,0),
@@ -12328,7 +12328,7 @@ task.spawn(function()
 task.wait(0.4)
 au.UIElements.Main.Visible=false
 
-if au.OpenButtonMain and not au.Destroyed and not au.IsPC and au.IsOpenButtonEnabled then
+if au.OpenButtonMain and not au.Destroyed and au.IsOpenButtonEnabled then
 au.OpenButtonMain:Visible(true)
 end
 end)

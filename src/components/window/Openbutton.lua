@@ -132,6 +132,11 @@ function OpenButton.New(Window)
 
     function OpenButtonMain:Edit(OpenButtonConfig)
         OpenButtonConfig = OpenButtonConfig or {}
+        local iconToUse = OpenButtonConfig.Icon
+
+        if iconToUse == nil then
+            iconToUse = Window.Icon
+        end
 
         if OpenButtonConfig.Enabled ~= nil then
             Window.IsOpenButtonEnabled = OpenButtonConfig.Enabled ~= false
@@ -141,8 +146,8 @@ function OpenButton.New(Window)
             Container.Position = OpenButtonConfig.Position
         end
 
-        if OpenButtonConfig.Icon ~= nil then
-            OpenButtonMain:SetIcon(OpenButtonConfig.Icon)
+        if iconToUse ~= nil then
+            OpenButtonMain:SetIcon(iconToUse)
         end
 
         currentColor = resolveButtonColor(OpenButtonConfig.Color)
