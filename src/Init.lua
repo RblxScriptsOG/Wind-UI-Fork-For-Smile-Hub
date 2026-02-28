@@ -254,11 +254,7 @@ if Creator.Icons and Creator.Icons.SetIconsType then
     Creator.Icons.SetIconsType("solar")
 end
 
-<<<<<<< HEAD
 WindUI:SetTheme("$mile")
-=======
-WindUI:SetTheme("SmileGlass")
->>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
 WindUI:SetLanguage(Creator.Language)
 
 local MileAccent = Color3.fromHex("#30ff6a")
@@ -361,18 +357,12 @@ function WindUI:CreateWindow(Config)
     
     local CanLoadWindow = true
     
-<<<<<<< HEAD
-    local Theme = WindUI.Themes[Config.Theme or "$mile"]
-    
-    --WindUI.Theme = Theme
-=======
-    local Theme = WindUI.Themes[Config.Theme] or WindUI.Theme or WindUI.Themes["SmileGlass"] or WindUI.Themes["Dark"]
+    local Theme = WindUI.Themes[Config.Theme] or WindUI.Theme or WindUI.Themes["$mile"] or WindUI.Themes["SmileGlass"] or WindUI.Themes["Dark"]
 
     if Config.Theme and not WindUI.Themes[Config.Theme] then
         warn(string.format("SmileHub: theme '%s' was not found, using fallback theme", tostring(Config.Theme)))
     end
 
->>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
     Creator.SetTheme(Theme)
     
     
