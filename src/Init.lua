@@ -64,7 +64,7 @@ local UIScaleObj = New("UIScale", {
 WindUI.UIScaleObj = UIScaleObj
 
 WindUI.ScreenGui = New("ScreenGui", {
-    Name = "WindUI",
+    Name = "SmileHub",
     Parent = GUIParent,
     IgnoreGuiInset = true,
     ScreenInsets = "None",
@@ -91,17 +91,17 @@ WindUI.ScreenGui = New("ScreenGui", {
 })
 
 WindUI.NotificationGui = New("ScreenGui", {
-    Name = "WindUI/Notifications",
+    Name = "SmileHub/Notifications",
     Parent = GUIParent,
     IgnoreGuiInset = true,
 })
 WindUI.DropdownGui = New("ScreenGui", {
-    Name = "WindUI/Dropdowns",
+    Name = "SmileHub/Dropdowns",
     Parent = GUIParent,
     IgnoreGuiInset = true,
 })
 WindUI.TooltipGui = New("ScreenGui", {
-    Name = "WindUI/Tooltips",
+    Name = "SmileHub/Tooltips",
     Parent = GUIParent,
     IgnoreGuiInset = true,
 })
@@ -254,7 +254,11 @@ if Creator.Icons and Creator.Icons.SetIconsType then
     Creator.Icons.SetIconsType("solar")
 end
 
+<<<<<<< HEAD
 WindUI:SetTheme("$mile")
+=======
+WindUI:SetTheme("SmileGlass")
+>>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
 WindUI:SetLanguage(Creator.Language)
 
 local MileAccent = Color3.fromHex("#30ff6a")
@@ -356,9 +360,18 @@ function WindUI:CreateWindow(Config)
     
     local CanLoadWindow = true
     
+<<<<<<< HEAD
     local Theme = WindUI.Themes[Config.Theme or "$mile"]
     
     --WindUI.Theme = Theme
+=======
+    local Theme = WindUI.Themes[Config.Theme] or WindUI.Theme or WindUI.Themes["SmileGlass"] or WindUI.Themes["Dark"]
+
+    if Config.Theme and not WindUI.Themes[Config.Theme] then
+        warn(string.format("SmileHub: theme '%s' was not found, using fallback theme", tostring(Config.Theme)))
+    end
+
+>>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
     Creator.SetTheme(Theme)
     
     

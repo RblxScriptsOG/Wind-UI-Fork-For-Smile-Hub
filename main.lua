@@ -30,7 +30,11 @@ local Localization = WindUI:Localization({
 
 
 WindUI.TransparencyValue = 0.2
+<<<<<<< HEAD
 WindUI:SetTheme("$mile")
+=======
+WindUI:SetTheme("SmileGlass")
+>>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
 
 local function gradient(text, startColor, endColor)
     local result = ""
@@ -99,11 +103,20 @@ WindUI.Services.mysuperservicetogetkey = {
 
 
 local Window = WindUI:CreateWindow({
+<<<<<<< HEAD
     Title = "loc:MILEHUB_EXAMPLE",
     Icon = "solar:smile-circle-bold",
     Author = "loc:WELCOME",
     Folder = "mileHub_Example",
     Size = UDim2.fromOffset(580, 490),
+=======
+    Title = "Smile Hub",
+    Icon = "geist:window",
+    Author = "Smile Hub UI",
+    Folder = "SmileHub",
+    Size = UDim2.fromOffset(580, 490),
+    Theme = "SmileGlass",
+>>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
     
     HidePanelBackground = false,
     NewElements = false,
@@ -131,15 +144,24 @@ local Window = WindUI:CreateWindow({
     SideBarWidth = 200,
     
     OpenButton = {
+<<<<<<< HEAD
         Title = "Open Smile Hub UI", -- can be changed
         CornerRadius = UDim.new(1,0), -- fully rounded
         StrokeThickness = 3, -- removing outline
         Enabled = false, -- disabled by default in $mile preset
+=======
+        Title = "$", -- hardcoded minimize/open button style
+        CornerRadius = UDim.new(1,0), -- fully rounded
+        StrokeThickness = 1,
+        Enabled = true, -- enable or disable openbutton
+>>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
         OnlyMobile = false,
+        OnlyIcon = true,
+        Draggable = false,
         
         Color = ColorSequence.new( -- gradient
-            Color3.fromHex("#30FF6A"), 
-            Color3.fromHex("#e7ff2f")
+            Color3.fromHex("#22c55e"), 
+            Color3.fromHex("#16a34a")
         ),
     
         -- Draggable = false,
@@ -248,7 +270,7 @@ end)
 
 
 Window:CreateTopbarButton("theme-switcher", "moon", function()
-    WindUI:SetTheme(WindUI:GetCurrentTheme() == "Dark" and "Light" or "Dark")
+    WindUI:SetTheme(WindUI:GetCurrentTheme() == "SmileGlass" and "SmileEmerald" or "SmileGlass")
     WindUI:Notify({
         Title = "Theme Changed",
         Content = "Current theme: "..WindUI:GetCurrentTheme(),
@@ -264,7 +286,7 @@ local Sections = {
 
 local Tabs = {
     Elements = Sections.Main:Tab({ Title = "loc:UI_ELEMENTS", Icon = "layout-grid", Desc = "UI Elements Example" }),
-    Appearance = Sections.Settings:Tab({ Title = "loc:APPEARANCE", Icon = "brush" }),
+    Appearance = Sections.Settings:Tab({ Title = "Themes", Icon = "brush" }),
     Config = Sections.Utilities:Tab({ Title = "loc:CONFIGURATION", Icon = "settings" }),
     LockedTab1 = Window:Tab({ Title = "loc:LOCKED_TAB", Icon = "bird", Locked = true, }),
     LockedTab2 = Window:Tab({ Title = "loc:LOCKED_TAB", Icon = "bird", Locked = true, }),
@@ -473,18 +495,25 @@ ElementsSection:Code({
 })
 
 Tabs.Appearance:Paragraph({
-    Title = "Customize Interface",
-    Desc = "Personalize your experience",
+    Title = "Smile Hub Themes",
+    Desc = "Select one of the hardcoded Smile Hub themes",
     Image = "palette",
     ImageSize = 20,
     Color = "White"
 })
 
-local themes = {}
-for themeName, _ in pairs(WindUI:GetThemes()) do
-    table.insert(themes, themeName)
-end
-table.sort(themes)
+local themes = {
+    "SmileGlass",
+    "SmileEmerald",
+    "SmileCyan",
+    "SmileBlue",
+    "SmileViolet",
+    "SmileRose",
+    "SmileAmber",
+    "SmileLime",
+    "SmileOrange",
+    "SmileRuby",
+}
 
 local canchangetheme = true
 local canchangedropdown = true
@@ -492,12 +521,12 @@ local canchangedropdown = true
 
 
 local themeDropdown = Tabs.Appearance:Dropdown({
-    Title = "loc:THEME_SELECT",
+    Title = "Theme",
     Values = themes,
     Flag = "themeDropdown",
-    SearchBarEnabled = true,
+    SearchBarEnabled = false,
     MenuWidth = 280,
-    Value = "Dark",
+    Value = "SmileGlass",
     Callback = function(theme)
         canchangedropdown = false
         WindUI:SetTheme(theme)
@@ -527,39 +556,37 @@ local transparencySlider = Tabs.Appearance:Slider({
 })
 
 local ThemeToggle = Tabs.Appearance:Toggle({
-    Title = "Enable Dark Mode",
-    Desc = "Use dark color scheme",
+    Title = "Use SmileGlass",
+    Desc = "Quick switch between SmileGlass and SmileEmerald",
     Value = true,
     Callback = function(state)
         if canchangetheme then
-            WindUI:SetTheme(state and "Dark" or "Light")
+            WindUI:SetTheme(state and "SmileGlass" or "SmileEmerald")
         end
         if canchangedropdown then
-            themeDropdown:Select(state and "Dark" or "Light")
+            themeDropdown:Select(state and "SmileGlass" or "SmileEmerald")
         end
     end
 })
 
 WindUI:OnThemeChange(function(theme)
     canchangetheme = false
-    ThemeToggle:Set(theme == "Dark")
+    ThemeToggle:Set(theme == "SmileGlass")
     canchangetheme = true
 end)
 
 
 Tabs.Appearance:Button({
-    Title = "Create New Theme",
-    Icon = "plus",
+    Title = "Re-Apply Default Theme",
+    Icon = "refresh-cw",
     Callback = function()
-        Window:Dialog({
-            Title = "Create Theme",
-            Content = "This feature is coming soon!",
-            Buttons = {
-                {
-                    Title = "OK",
-                    Variant = "Primary"
-                }
-            }
+        WindUI:SetTheme("SmileGlass")
+        themeDropdown:Select("SmileGlass")
+        WindUI:Notify({
+            Title = "Theme Applied",
+            Content = "SmileGlass",
+            Icon = "palette",
+            Duration = 2,
         })
     end
 })

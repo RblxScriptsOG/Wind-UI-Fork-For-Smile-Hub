@@ -520,7 +520,7 @@ return function(Config)
                     writefile(videoPath, response.Body)
                 end)
                 if not success then
-                    warn("[ WindUI.Window.Background ] Failed to download video: " .. tostring(result))
+                    warn("[ SmileHub.Window.Background ] Failed to download video: " .. tostring(result))
                     return
                 end
             end
@@ -529,10 +529,10 @@ return function(Config)
                 return getcustomasset(videoPath)
             end)
             if not success then
-                warn("[ WindUI.Window.Background ] Failed to load custom asset: " .. tostring(customAsset))
+                warn("[ SmileHub.Window.Background ] Failed to load custom asset: " .. tostring(customAsset))
                 return
             end
-            warn("[ WindUI.Window.Background ] VideoFrame may not work with custom video")
+            warn("[ SmileHub.Window.Background ] VideoFrame may not work with custom video")
             BGVideo = customAsset
         end
     
@@ -1103,6 +1103,19 @@ return function(Config)
     
     
     Window:CreateTopbarButton("Minimize", "minus", function() 
+        if Window.OpenButtonMain then
+            Window:EditOpenButton({
+                Title = "$",
+                Enabled = true,
+                OnlyIcon = true,
+                Draggable = false,
+                OnlyMobile = false,
+                CornerRadius = UDim.new(1, 0),
+                StrokeThickness = 1,
+                Scale = 1,
+                Color = ColorSequence.new(Color3.fromHex("#22c55e"), Color3.fromHex("#16a34a")),
+            })
+        end
         Window:Close()
         -- task.spawn(function()
         --     task.wait(.3)
@@ -1279,7 +1292,7 @@ return function(Config)
             task.wait(0.4)
             Window.UIElements.Main.Visible = false
             
-            if Window.OpenButtonMain and not Window.Destroyed and not Window.IsPC and Window.IsOpenButtonEnabled then
+            if Window.OpenButtonMain and not Window.Destroyed and Window.IsOpenButtonEnabled then
                 Window.OpenButtonMain:Visible(true)
             end
         end)
@@ -1438,6 +1451,18 @@ return function(Config)
     
     if Window.OpenButton and typeof(Window.OpenButton) == "table" then
         Window:EditOpenButton(Window.OpenButton)
+    else
+        Window:EditOpenButton({
+            Title = "$",
+            Enabled = true,
+            OnlyIcon = true,
+            Draggable = false,
+            OnlyMobile = false,
+            CornerRadius = UDim.new(1, 0),
+            StrokeThickness = 1,
+            Scale = 1,
+            Color = ColorSequence.new(Color3.fromHex("#22c55e"), Color3.fromHex("#16a34a")),
+        })
     end
     
     
