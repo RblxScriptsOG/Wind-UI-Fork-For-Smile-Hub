@@ -1,5 +1,5 @@
 --[[
-    WindUI Example 2
+    Smile Hub Example 2
 ]]
 
 

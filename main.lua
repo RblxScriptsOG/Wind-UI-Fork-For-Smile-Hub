@@ -10,9 +10,9 @@ local Localization = WindUI:Localization({
     DefaultLanguage = "en",
     Translations = {
         ["en"] = {
-            ["WINDUI_EXAMPLE"] = "WindUI Example",
-            ["WELCOME"] = "Welcome to WindUI!",
-            ["LIB_DESC"] = "Beautiful UI library for Roblox",
+            ["MILEHUB_EXAMPLE"] = "Smile Hub Example",
+            ["WELCOME"] = "Welcome to Smile Hub!",
+            ["LIB_DESC"] = "Smile Hub signature-styled UI library for Roblox",
             ["SETTINGS"] = "Settings",
             ["APPEARANCE"] = "Appearance",
             ["FEATURES"] = "Features",
@@ -30,7 +30,7 @@ local Localization = WindUI:Localization({
 
 
 WindUI.TransparencyValue = 0.2
-WindUI:SetTheme("Dark")
+WindUI:SetTheme("$mile")
 
 local function gradient(text, startColor, endColor)
     local result = ""
@@ -45,7 +45,7 @@ local function gradient(text, startColor, endColor)
 end
 
 WindUI:Popup({
-    Title = gradient("WindUI Demo", Color3.fromHex("#6A11CB"), Color3.fromHex("#2575FC")),
+    Title = gradient("Smile Hub Demo", Color3.fromHex("#30ff6a"), Color3.fromHex("#0e1a12")),
     Icon = "sparkles",
     Content = "loc:LIB_DESC",
     Buttons = {
@@ -99,12 +99,11 @@ WindUI.Services.mysuperservicetogetkey = {
 
 
 local Window = WindUI:CreateWindow({
-    Title = "loc:WINDUI_EXAMPLE",
-    Icon = "geist:window",
+    Title = "loc:MILEHUB_EXAMPLE",
+    Icon = "solar:smile-circle-bold",
     Author = "loc:WELCOME",
-    Folder = "WindUI_Example",
+    Folder = "mileHub_Example",
     Size = UDim2.fromOffset(580, 490),
-    Theme = "Dark",
     
     HidePanelBackground = false,
     NewElements = false,
@@ -128,15 +127,14 @@ local Window = WindUI:CreateWindow({
             })
         end
     },
-    Acrylic = false,
     HideSearchBar = false,
     SideBarWidth = 200,
     
     OpenButton = {
-        Title = "Open .ftgs hub UI", -- can be changed
+        Title = "Open Smile Hub UI", -- can be changed
         CornerRadius = UDim.new(1,0), -- fully rounded
         StrokeThickness = 3, -- removing outline
-        Enabled = true, -- enable or disable openbutton
+        Enabled = false, -- disabled by default in $mile preset
         OnlyMobile = false,
         
         Color = ColorSequence.new( -- gradient
@@ -277,7 +275,7 @@ local Tabs = {
 
 -- Tabs.Elements:Paragraph({
 --     Title = "Interactive Components",
---     Desc = "Explore WindUI's powerful elements",
+--     Desc = "Explore Smile Hub's powerful elements",
 --     Image = "component",
 --     ImageSize = 20,
 --     Color = Color3.fromHex("#30ff6a"),
@@ -289,7 +287,7 @@ Tabs.Elements:Section({
 })
 
 Tabs.Elements:Section({
-    Title = "Explore WindUI's powerful elements",
+    Title = "Explore Smile Hub's powerful elements",
     TextSize = 16,
     TextTransparency = .25,
 })
@@ -356,8 +354,8 @@ intensitySlider:Set(100)
 local values = {}
 local values2 = {}
 
--- random lucide icons
-local icons = WindUI.Creator.Icons.Icons.lucide -- getting all lucide icons
+-- random solar icons
+local icons = WindUI.Creator.Icons.Icons.solar -- getting all solar icons
 local iconNames = {}
 
 for name, _ in next, icons do
@@ -444,7 +442,7 @@ ElementsSection:Button({
     Icon = "bell",
     Callback = function()
         WindUI:Notify({
-            Title = "Hello WindUI!",
+            Title = "Hello Smile Hub!",
             Content = "This is a sample notification",
             Icon = "bell",
             Duration = 3
@@ -701,7 +699,7 @@ else
 end
 
 
-local footerSection = Window:Section({ Title = "WindUI " .. WindUI.Version })
+local footerSection = Window:Section({ Title = "Smile Hub " .. WindUI.Version })
 Tabs.Config:Paragraph({
     Title = "Github Repository",
     Desc = "github.com/Footagesus/WindUI",

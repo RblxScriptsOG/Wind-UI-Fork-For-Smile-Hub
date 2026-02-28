@@ -1,5 +1,5 @@
 --[[
-    WindUI Example 
+    Smile Hub Example
 
     example moved to main.client.lua
 ]]

@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 --[[
 
-    WindUI Example (wip)
+    Smile Hub Example (wip)
     
 ]]
 
@@ -45,7 +45,7 @@ WindUI.Creator.AddIcons("solar", {
 
 function createPopup()
     return WindUI:Popup({
-        Title = "Welcome to the WindUI!",
+        Title = "Welcome to Smile Hub!",
         Icon = "bird",
         Content = "Hello!",
         Buttons = {
@@ -72,7 +72,7 @@ end
 
 -- */  Window  /* --
 local Window = WindUI:CreateWindow({
-    Title = ".ftgs hub  |  WindUI Example",
+    Title = ".ftgs hub  |  Smile Hub Example",
     --Author = "by .ftgs • Footagesus",
     Folder = "ftgshub",
     Icon = "solar:folder-2-bold-duotone",
@@ -258,7 +258,7 @@ end
 -- */  About Tab  /* --
 do
     local AboutTab = Window:Tab({
-        Title = "About WindUI",
+        Title = "About Smile Hub",
         Desc = "Description Example", 
         Icon = "solar:info-square-bold",
         IconColor = Grey,
@@ -267,7 +267,7 @@ do
     })
     
     local AboutSection = AboutTab:Section({
-        Title = "About WindUI",
+        Title = "About Smile Hub",
     })
     
     AboutSection:Image({
@@ -279,7 +279,7 @@ do
     AboutSection:Space({ Columns = 3 })
     
     AboutSection:Section({
-        Title = "What is WindUI?",
+        Title = "What is Smile Hub?",
         TextSize = 24,
         FontWeight = Enum.FontWeight.SemiBold,
     })
@@ -287,7 +287,7 @@ do
     AboutSection:Space()
     
     AboutSection:Section({
-        Title = "WindUI is a stylish, open-source UI (User Interface) library specifically designed for Roblox Script Hubs.\nDeveloped by Footagesus (.ftgs, Footages).\nIt aims to provide developers with a modern, customizable, and easy-to-use toolkit for creating visually appealing interfaces within Roblox.\nThe project is primarily written in Lua (Luau), the scripting language used in Roblox.",
+        Title = "Smile Hub is a stylish, open-source UI (User Interface) library specifically designed for Roblox Script Hubs.\nDeveloped by Footagesus (.ftgs, Footages).\nIt aims to provide developers with a modern, customizable, and easy-to-use toolkit for creating visually appealing interfaces within Roblox.\nThe project is primarily written in Lua (Luau), the scripting language used in Roblox.",
         TextSize = 18,
         TextTransparency = .35,
         FontWeight = Enum.FontWeight.Medium,
@@ -299,7 +299,7 @@ do
     -- Default buttons
     
     AboutTab:Button({
-        Title = "Export WindUI JSON (copy)",
+        Title = "Export Smile Hub JSON (copy)",
         Color = Color3.fromHex("#a2ff30"),
         Justify = "Center",
         IconAlign = "Left",
@@ -307,7 +307,7 @@ do
         Callback = function()
             tableToClipboard(WindUI)
             WindUI:Notify({
-                Title = "WindUI JSON",
+                Title = "Smile Hub JSON",
                 Content = "Copied to Clipboard!"
             })
         end
@@ -518,7 +518,7 @@ do
         Callback = function()
             WindUI:Notify({
                 Title = "Hello",
-                Content = "Welcome to the WindUI Example!",
+                Content = "Welcome to the Smile Hub Example!",
                 Icon = "solar:bell-bold",
                 Duration = 5,
                 CanClose = false,
@@ -533,7 +533,7 @@ do
         Callback = function()
             WindUI:Notify({
                 Title = "Hello",
-                Content = "Welcome to the WindUI Example!",
+                Content = "Welcome to the Smile Hub Example!",
                 --Icon = "solar:bell-bold",
                 Duration = 5,
                 CanClose = false,
@@ -1122,7 +1122,7 @@ do
         Url = DiscordAPI,
         Method = "GET",
         Headers = {
-            ["User-Agent"] = "WindUI/Example",
+            ["User-Agent"] = "SmileHub/Example",
             ["Accept"] = "application/json"
         }
     }).Body or "{}")

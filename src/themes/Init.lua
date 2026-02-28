@@ -248,6 +248,29 @@ return function(WindUI)
             }
         },
 
+        ["$mile"] = {
+            Name = "$mile",
+
+            -- Monokai Pro base with $mile accent overrides
+            Accent = Color3.fromHex("#2d2a2e"),
+            Dialog = Color3.fromHex("#221f22"),
+            Outline = Color3.fromHex("#f8f8f2"),
+            Text = Color3.fromHex("#f8f8f2"),
+            Placeholder = Color3.fromHex("#727072"),
+            Background = Color3.fromHex("#191622"),
+            Button = Color3.fromHex("#30ff6a"),
+            Icon = Color3.fromHex("#30ff6a"),
+
+            Toggle = Color3.fromHex("#30ff6a"),
+            Slider = Color3.fromHex("#30ff6a"),
+            SliderThumb = Color3.fromHex("#30ff6a"),
+            Checkbox = Color3.fromHex("#30ff6a"),
+            Primary = Color3.fromHex("#30ff6a"),
+
+            PanelBackground = Color3.fromHex("#0b0b0c"),
+            PanelBackgroundTransparency = 0.6,
+        },
+
         CottonCandy = {
             Name = "Cotton Candy",
             

@@ -21,7 +21,7 @@ else
     )()
 end
 
-Icons.SetIconsType("lucide")
+Icons.SetIconsType("solar")
 
 local WindUI
 

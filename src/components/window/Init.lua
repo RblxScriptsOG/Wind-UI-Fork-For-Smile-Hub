@@ -77,6 +77,7 @@ return function(Config)
         AcrylicPaint = nil,
         CurrentTab = nil,
         TabModule = nil,
+        SmileToggle = nil,
         
         OnOpenCallback    = nil,
         OnCloseCallback   = nil,
@@ -978,6 +979,7 @@ return function(Config)
     -- end
     
     Window.OpenButtonMain = require("./Openbutton").New(Window)
+    Window.SmileToggle = require("./SmileButton").New(Window)
 
     
     task.spawn(function()

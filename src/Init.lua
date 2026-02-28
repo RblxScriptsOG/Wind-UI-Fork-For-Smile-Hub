@@ -8,7 +8,7 @@ local WindUI = {
     Themes = nil,
     Transparent = false,
     
-    TransparencyValue = .15,
+    TransparencyValue = .6,
     
     UIScale = 1,
     
@@ -250,13 +250,90 @@ WindUI.Themes = require("./themes/Init")(WindUI)
 
 Creator.Themes = WindUI.Themes
 
+if Creator.Icons and Creator.Icons.SetIconsType then
+    Creator.Icons.SetIconsType("solar")
+end
 
-WindUI:SetTheme("Dark")
+WindUI:SetTheme("$mile")
 WindUI:SetLanguage(Creator.Language)
 
+local MileAccent = Color3.fromHex("#30ff6a")
+
+local function cloneTable(input)
+    local new = {}
+    if typeof(input) == "table" then
+        for k, v in pairs(input) do
+            new[k] = v
+        end
+    end
+    return new
+end
+
+local function mergeDefaults(config, defaults)
+    local output = cloneTable(defaults)
+    if typeof(config) == "table" then
+        for k, v in pairs(config) do
+            output[k] = v
+        end
+    end
+    return output
+end
+
+local function resolveSmileIcon(icon)
+    local candidates = {
+        icon,
+        "solar:smile-circle-bold",
+        "smile-circle-bold",
+        "solar:smile-circle",
+        "smile-circle",
+        "lucide:sparkles",
+    }
+
+    for _, candidate in ipairs(candidates) do
+        if candidate and Creator.Icon(candidate) then
+            return candidate
+        end
+    end
+
+    return nil
+end
+
+local function resolveSmileElementParent(Window, config)
+    if config and config.Parent then
+        return config.Parent
+    end
+
+    if Window.CurrentTab and Window.TabModule and Window.TabModule.Tabs[Window.CurrentTab] then
+        return Window.TabModule.Tabs[Window.CurrentTab]
+    end
+
+    if Window.TabModule and Window.TabModule.Tabs[1] then
+        return Window.TabModule.Tabs[1]
+    end
+
+    return nil
+end
 
 function WindUI:CreateWindow(Config)
+    Config = Config or {}
     local CreateWindow = require("./components/window/Init")
+
+    if Creator.Icons and Creator.Icons.SetIconsType then
+        Creator.Icons.SetIconsType("solar")
+    end
+
+    Config.Theme = "$mile"
+    Config.Transparent = true
+    Config.Acrylic = true
+    Config.Title = Config.Title or "$mile Hub"
+    Config.Icon = Config.Icon or resolveSmileIcon("solar:smile-circle-bold")
+    Config.Topbar = mergeDefaults(Config.Topbar, {
+        Height = 44,
+        ButtonsType = "Mac",
+    })
+    Config.OpenButton = mergeDefaults(Config.OpenButton, {
+        Enabled = false,
+    })
     
     if not RunService:IsStudio() and writefile then
         if not isfolder("WindUI") then
@@ -279,7 +356,7 @@ function WindUI:CreateWindow(Config)
     
     local CanLoadWindow = true
     
-    local Theme = WindUI.Themes[Config.Theme or "Dark"]
+    local Theme = WindUI.Themes[Config.Theme or "$mile"]
     
     --WindUI.Theme = Theme
     Creator.SetTheme(Theme)
@@ -380,6 +457,64 @@ function WindUI:CreateWindow(Config)
     --         NumberSequenceKeypoint.new(1, Value and 0.85 or 0.7),
     --     }
     -- end
+
+    function Window:AddSmileTab(TabConfig)
+        local config = cloneTable(TabConfig or {})
+        config.Icon = resolveSmileIcon(config.Icon)
+        return Window:Tab(config)
+    end
+
+    function Window:AddSmileSection(SectionConfig)
+        local config = cloneTable(SectionConfig or {})
+        config.Icon = resolveSmileIcon(config.Icon)
+        return Window:Section(config)
+    end
+
+    function Window:AddSmileToggle(ToggleConfig)
+        local config = cloneTable(ToggleConfig or {})
+        local parent = resolveSmileElementParent(Window, config)
+
+        if not parent or not parent.Toggle then
+            error("AddSmileToggle requires a target tab via config.Parent or an existing selected tab")
+        end
+
+        config.Icon = resolveSmileIcon(config.Icon)
+        return parent:Toggle(config)
+    end
+
+    function Window:AddSmileButton(ButtonConfig)
+        local config = cloneTable(ButtonConfig or {})
+        local parent = resolveSmileElementParent(Window, config)
+
+        if not parent or not parent.Button then
+            error("AddSmileButton requires a target tab via config.Parent or an existing selected tab")
+        end
+
+        config.Icon = resolveSmileIcon(config.Icon)
+        config.Color = config.Color or MileAccent
+        return parent:Button(config)
+    end
+
+    function Window:AddSmileSlider(SliderConfig)
+        local config = cloneTable(SliderConfig or {})
+        local parent = resolveSmileElementParent(Window, config)
+
+        if not parent or not parent.Slider then
+            error("AddSmileSlider requires a target tab via config.Parent or an existing selected tab")
+        end
+
+        if not config.Icons then
+            local smileIcon = resolveSmileIcon()
+            if smileIcon then
+                config.Icons = {
+                    From = smileIcon,
+                    To = smileIcon,
+                }
+            end
+        end
+
+        return parent:Slider(config)
+    end
     
     return Window
 end
