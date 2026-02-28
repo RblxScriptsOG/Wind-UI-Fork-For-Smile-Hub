@@ -6,6 +6,15 @@ local Tween = Creator.Tween
 
 local DEFAULT_COLOR = Color3.fromHex("#16a34a")
 
+local function darkenColor(color, amount)
+    local factor = 1 - amount
+    return Color3.new(
+        math.clamp(color.R * factor, 0, 1),
+        math.clamp(color.G * factor, 0, 1),
+        math.clamp(color.B * factor, 0, 1)
+    )
+end
+
 local function resolveButtonColor(openButtonConfig)
     local colorValue = openButtonConfig and (
         openButtonConfig.CircleColor
@@ -63,6 +72,35 @@ function OpenButton.New(Window)
         New("UICorner", {
             CornerRadius = UDim.new(1, 0)
         }),
+        New("UIGradient", {
+            Rotation = 35,
+            Color = ColorSequence.new({
+                ColorSequenceKeypoint.new(0, currentColor:Lerp(Color3.new(1, 1, 1), 0.08)),
+                ColorSequenceKeypoint.new(0.4, currentColor),
+                ColorSequenceKeypoint.new(1, darkenColor(currentColor, 0.12)),
+            }),
+        }),
+        New("UIStroke", {
+            ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+            Thickness = 1.4,
+            Transparency = 0,
+            Color = darkenColor(currentColor, 0.28),
+        }),
+        New("ImageLabel", {
+            Name = "TextureOverlay",
+            Size = UDim2.fromScale(1, 1),
+            Position = UDim2.fromScale(0, 0),
+            BackgroundTransparency = 1,
+            Image = Creator.Shapes["Glass-1"],
+            ImageColor3 = currentColor:Lerp(Color3.new(1, 1, 1), 0.12),
+            ImageTransparency = 0.94,
+            ScaleType = Enum.ScaleType.Crop,
+            ZIndex = 100,
+        }, {
+            New("UICorner", {
+                CornerRadius = UDim.new(1, 0)
+            }),
+        }),
         New("TextButton", {
             AutomaticSize = "None",
             Active = true,
@@ -70,6 +108,7 @@ function OpenButton.New(Window)
             Size = UDim2.new(1, -8, 1, -8),
             Position = UDim2.new(0, 4, 0, 4),
             BackgroundColor3 = Color3.new(1,1,1),
+            ZIndex = 101,
         }, {
             New("UICorner", {
                 CornerRadius = UDim.new(1, -4)
@@ -99,6 +138,7 @@ function OpenButton.New(Window)
             Icon.AnchorPoint = Vector2.new(0.5, 0.5)
             Icon.Position = UDim2.new(0.5, 0, 0.5, 0)
             Icon.BackgroundTransparency = 1
+            Icon.ZIndex = 102
             Icon.Parent = OpenButtonMain.Button.TextButton
         end
     end
@@ -116,10 +156,12 @@ function OpenButton.New(Window)
 
     Creator.AddSignal(Button.TextButton.MouseEnter, function()
         Tween(Button, .1, {BackgroundColor3 = hoverColor}):Play()
+        Tween(Button.UIStroke, .1, {Color = darkenColor(hoverColor, 0.28)}):Play()
     end)
 
     Creator.AddSignal(Button.TextButton.MouseLeave, function()
         Tween(Button, .1, {BackgroundColor3 = currentColor}):Play()
+        Tween(Button.UIStroke, .1, {Color = darkenColor(currentColor, 0.28)}):Play()
     end)
 
     function OpenButtonMain:Visible(v)
@@ -154,6 +196,13 @@ function OpenButton.New(Window)
         hoverColor = currentColor:Lerp(Color3.new(1, 1, 1), 0.15)
 
         Button.BackgroundColor3 = currentColor
+        Button.UIStroke.Color = darkenColor(currentColor, 0.28)
+        Button.UIGradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, currentColor:Lerp(Color3.new(1, 1, 1), 0.08)),
+            ColorSequenceKeypoint.new(0.4, currentColor),
+            ColorSequenceKeypoint.new(1, darkenColor(currentColor, 0.12)),
+        })
+        Button.TextureOverlay.ImageColor3 = currentColor:Lerp(Color3.new(1, 1, 1), 0.12)
 
         OpenButtonMain:SetScale(OpenButtonConfig.Scale or 1)
     end
