@@ -332,8 +332,7 @@ function WindUI:CreateWindow(Config)
         ButtonsType = "Mac",
     })
     Config.OpenButton = mergeDefaults(Config.OpenButton, {
-        Icon = Config.Icon,
-        Color = ColorSequence.new(Color3.fromHex("#22c55e"), Color3.fromHex("#16a34a")),
+        Color = Color3.fromHex("#001400"),
     })
     
     if not RunService:IsStudio() and writefile then
