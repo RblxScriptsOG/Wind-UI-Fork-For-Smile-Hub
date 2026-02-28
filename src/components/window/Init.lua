@@ -1105,14 +1105,7 @@ return function(Config)
     Window:CreateTopbarButton("Minimize", "minus", function() 
         if Window.OpenButtonMain then
             Window:EditOpenButton({
-                Title = "$",
-                Enabled = true,
-                OnlyIcon = true,
-                Draggable = false,
-                OnlyMobile = false,
-                CornerRadius = UDim.new(1, 0),
-                StrokeThickness = 1,
-                Scale = 1,
+                Icon = Window.Icon,
                 Color = ColorSequence.new(Color3.fromHex("#22c55e"), Color3.fromHex("#16a34a")),
             })
         end
@@ -1453,14 +1446,7 @@ return function(Config)
         Window:EditOpenButton(Window.OpenButton)
     else
         Window:EditOpenButton({
-            Title = "$",
-            Enabled = true,
-            OnlyIcon = true,
-            Draggable = false,
-            OnlyMobile = false,
-            CornerRadius = UDim.new(1, 0),
-            StrokeThickness = 1,
-            Scale = 1,
+            Icon = Window.Icon,
             Color = ColorSequence.new(Color3.fromHex("#22c55e"), Color3.fromHex("#16a34a")),
         })
     end

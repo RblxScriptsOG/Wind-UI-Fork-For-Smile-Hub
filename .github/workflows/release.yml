@@ -84,8 +84,8 @@ jobs:
                         "embeds": [
                           {
                             "author": {
-                              "name": "Footagesus/WindUI",
-                              "icon_url": "https://raw.githubusercontent.com/Footagesus/WindUI/main/docs/logo.png"
+                              "name": "RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub",
+                              "icon_url": "https://raw.githubusercontent.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/main/docs/logo.png"
                             },
                             "title": "New release: ${{ steps.version.outputs.version }}",
                             "description": "${{ steps.release_notes.outputs.notes }}",
@@ -93,7 +93,8 @@ jobs:
                               "text": "Commit hash: ${{ steps.commit.outputs.hash }}"
                             },
                             "color": 3211114,
-                            "url": "https://github.com/Footagesus/WindUI/releases/tag/${{ steps.version.outputs.version }}"
+                            "url": "https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/releases/tag/${{ steps.version.outputs.version }}"
                           }
                         ]
                       }
+

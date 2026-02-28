@@ -128,7 +128,7 @@ local Window = WindUI:CreateWindow({
     -- }),
     --Background = "video:https://cdn.discordapp.com/attachments/1337368451865645096/1402703845657673878/VID_20250616_180732_158.webm?ex=68958a01&is=68943881&hm=164c5b04d1076308b38055075f7eb0653c1d73bec9bcee08e918a31321fe3058&",
     --Background = "rbxassetid://88271032881974",
-    --Background = "https://footagesus.github.io/WindUI-Docs/banners/thumbnail2.jpg",
+    --Background = "https://raw.githubusercontent.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/main/docs/banner-new.webp",
     User = {
         Enabled = true,
         Anonymous = true,
@@ -144,34 +144,17 @@ local Window = WindUI:CreateWindow({
     SideBarWidth = 200,
     
     OpenButton = {
-<<<<<<< HEAD
-        Title = "Open Smile Hub UI", -- can be changed
-        CornerRadius = UDim.new(1,0), -- fully rounded
-        StrokeThickness = 3, -- removing outline
-        Enabled = false, -- disabled by default in $mile preset
-=======
-        Title = "$", -- hardcoded minimize/open button style
-        CornerRadius = UDim.new(1,0), -- fully rounded
-        StrokeThickness = 1,
-        Enabled = true, -- enable or disable openbutton
->>>>>>> 9e0b0aefdc8700d5438df057e12b67ef7e86202e
-        OnlyMobile = false,
-        OnlyIcon = true,
-        Draggable = false,
-        
-        Color = ColorSequence.new( -- gradient
+        Icon = "solar:smile-circle-bold",
+        Color = ColorSequence.new(
             Color3.fromHex("#22c55e"), 
             Color3.fromHex("#16a34a")
         ),
-    
-        -- Draggable = false,
-        -- OnlyIcon = true
     },
     
     -- KeySystem = { -- 
     --     -- Key = { "1234", "5678" },  
     --     Note = "Example Key System. With platoboost, etc.",
-    --     -- URL = "https://github.com/Footagesus/WindUI",
+    --     -- URL = "https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub",
     --     -- Thumbnail = {
     --     --     Image = "rbxassetid://",
     --     --     Title = "Thumbnail",
@@ -729,7 +712,7 @@ end
 local footerSection = Window:Section({ Title = "Smile Hub " .. WindUI.Version })
 Tabs.Config:Paragraph({
     Title = "Github Repository",
-    Desc = "github.com/Footagesus/WindUI",
+    Desc = "github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub",
     Image = "github",
     ImageSize = 20,
     Color = "Grey",
@@ -739,7 +722,7 @@ Tabs.Config:Paragraph({
             Icon = "copy",
             Variant = "Tertiary",
             Callback = function()
-                setclipboard("https://github.com/Footagesus/WindUI")
+                setclipboard("https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub")
                 WindUI:Notify({
                     Title = "Copied!",
                     Content = "GitHub link copied to clipboard",
@@ -794,5 +777,6 @@ if Window:GetUnlocked() and #Window:GetUnlocked() > 0 then
     end
     
 end
+
 
 

@@ -29,9 +29,10 @@
 ### Links
 
 - [Discord Server](https://discord.gg/ftgs-development-hub-1300692552005189632)
-- [Documentation](https://Footagesus.github.io/WindUI-Docs/)
-- [Installation](https://footagesus.github.io/WindUI-Docs/docs/installation)
+- [Documentation](https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/tree/main/docs)
+- [Installation](https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub#readme)
 - [Example](/main_example.lua) (wip)
     ```luau
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/Footagesus/WindUI/refs/heads/main/main_example.lua'))()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/refs/heads/main/main_example.lua'))()
     ```
+

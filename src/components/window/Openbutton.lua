@@ -4,150 +4,87 @@ local Creator = require("../../modules/Creator")
 local New = Creator.New
 local Tween = Creator.Tween
 
+local DEFAULT_COLOR = Color3.fromHex("#16a34a")
 
-local cloneref = (cloneref or clonereference or function(instance) return instance end)
+local function resolveButtonColor(colorValue)
+    if typeof(colorValue) == "Color3" then
+        return colorValue
+    end
 
+    if typeof(colorValue) == "ColorSequence" then
+        local firstKeypoint = colorValue.Keypoints[1]
+        if firstKeypoint then
+            return firstKeypoint.Value
+        end
+    end
 
-local UserInputService = cloneref(game:GetService("UserInputService"))
-
+    return DEFAULT_COLOR
+end
 
 function OpenButton.New(Window)
     local OpenButtonMain = {
         Button = nil
     }
-    
+
     local Icon
-    
-    
-    
-    -- Icon = New("ImageLabel", {
-    --     Image = "",
-    --     Size = UDim2.new(0,22,0,22),
-    --     Position = UDim2.new(0.5,0,0.5,0),
-    --     LayoutOrder = -1,
-    --     AnchorPoint = Vector2.new(0.5,0.5),
-    --     BackgroundTransparency = 1,
-    --     Name = "Icon"
-    -- })
-
-    local Title = New("TextLabel", {
-        Text = "$",
-        TextSize = 24,
-        TextColor3 = Color3.fromHex("#ffffff"),
-        FontFace = Font.new(Creator.Font, Enum.FontWeight.Bold),
-        BackgroundTransparency = 1,
-        AutomaticSize = "XY",
-    })
-
-    local Drag = New("Frame", {
-        Size = UDim2.new(0,44-8,0,44-8),
-        BackgroundTransparency = 1, 
-        Name = "Drag",
-        Visible = false,
-    }, {
-        New("ImageLabel", {
-            Image = Creator.Icon("move")[1],
-            ImageRectOffset = Creator.Icon("move")[2].ImageRectPosition,
-            ImageRectSize = Creator.Icon("move")[2].ImageRectSize,
-            Size = UDim2.new(0,18,0,18),
-            BackgroundTransparency = 1,
-            Position = UDim2.new(0.5,0,0.5,0),
-            AnchorPoint = Vector2.new(0.5,0.5),
-            ThemeTag = {
-                ImageColor3 = "Icon",
-            },
-            ImageTransparency = .3,
-        })
-    })
-    local Divider = New("Frame", {
-        Size = UDim2.new(0,1,1,0),
-        Position = UDim2.new(0,20+16,0.5,0),
-        AnchorPoint = Vector2.new(0,0.5),
-        BackgroundColor3 = Color3.new(1,1,1),
-        BackgroundTransparency = .9,
-        Visible = false,
-    })
+    local currentColor = DEFAULT_COLOR
+    local hoverColor = currentColor:Lerp(Color3.new(1, 1, 1), 0.15)
 
     local Container = New("Frame", {
-        Size = UDim2.new(0,0,0,0),
-        Position = UDim2.new(0.5,0,0,6+44/2),
-        AnchorPoint = Vector2.new(0.5,0.5),
+        Size = UDim2.new(0, 52, 0, 52),
+        Position = UDim2.new(0.5, 0, 0, 6 + 44 / 2),
+        AnchorPoint = Vector2.new(0.5, 0.5),
         Parent = Window.Parent,
         BackgroundTransparency = 1,
         Active = true,
         Visible = false,
     })
 
-
     local UIScale = New("UIScale", {
         Scale = 1,
     })
 
     local Button = New("Frame", {
-        Size = UDim2.new(0,52,0,52),
+        Size = UDim2.new(0, 52, 0, 52),
         AutomaticSize = "None",
         Parent = Container,
         Active = false,
         BackgroundTransparency = 0,
         ZIndex = 99,
-        BackgroundColor3 = Color3.fromHex("#16a34a"),
+        BackgroundColor3 = currentColor,
     }, {
         UIScale,
-	    New("UICorner", {
-            CornerRadius = UDim.new(1,0)
+        New("UICorner", {
+            CornerRadius = UDim.new(1, 0)
         }),
         New("UIStroke", {
             Thickness = 1,
             ApplyStrokeMode = "Border",
-            Color = Color3.fromHex("#22c55e"),
+            Color = currentColor:Lerp(Color3.new(1, 1, 1), 0.2),
             Transparency = 0.15,
         }),
-        Drag,
-        Divider,
-        
-        New("UIListLayout", {
-            Padding = UDim.new(0, 4),
-            FillDirection = "Horizontal",
-            VerticalAlignment = "Center",
-        }),
-        
-        New("TextButton",{
+        New("TextButton", {
             AutomaticSize = "None",
             Active = true,
             BackgroundTransparency = 1,
-            Size = UDim2.new(1,-8,1,-8),
-            --Position = UDim2.new(0,20+16+16+1,0,0),
+            Size = UDim2.new(1, -8, 1, -8),
+            Position = UDim2.new(0, 4, 0, 4),
             BackgroundColor3 = Color3.new(1,1,1),
         }, {
             New("UICorner", {
-                CornerRadius = UDim.new(1,-4)
+                CornerRadius = UDim.new(1, -4)
             }),
-            Icon,
-            New("UIListLayout", {
-                Padding = UDim.new(0, Window.UIPadding),
-                FillDirection = "Horizontal",
-                VerticalAlignment = "Center",
-            }),
-            Title,
-            New("UIPadding", {
-                PaddingLeft = UDim.new(0,0),
-                PaddingRight = UDim.new(0,0),
-            }),
-        }),
-        New("UIPadding", {
-            PaddingLeft = UDim.new(0,4),
-            PaddingRight = UDim.new(0,4),
         })
     })
-    
+
     OpenButtonMain.Button = Button
-    
-    
-    
+
     function OpenButtonMain:SetIcon(newIcon)
         if Icon then
             Icon:Destroy()
+            Icon = nil
         end
+
         if newIcon then
             Icon = Creator.Image(
                 newIcon,
@@ -158,135 +95,66 @@ function OpenButton.New(Window)
                 true,
                 Window.IconThemed
             )
-            Icon.Size = UDim2.new(0,22,0,22)
-            Icon.LayoutOrder = -1
+            Icon.Size = UDim2.new(0, 22, 0, 22)
+            Icon.AnchorPoint = Vector2.new(0.5, 0.5)
+            Icon.Position = UDim2.new(0.5, 0, 0.5, 0)
+            Icon.BackgroundTransparency = 1
             Icon.Parent = OpenButtonMain.Button.TextButton
         end
     end
-    
+
     if Window.Icon then
         OpenButtonMain:SetIcon(Window.Icon)
     end
-    
-    
-    
+
     Creator.AddSignal(Button:GetPropertyChangedSignal("AbsoluteSize"), function()
         Container.Size = UDim2.new(
             0, Button.AbsoluteSize.X,
             0, Button.AbsoluteSize.Y
         )
     end)
-    
+
     Creator.AddSignal(Button.TextButton.MouseEnter, function()
-        Tween(Button, .1, {BackgroundColor3 = Color3.fromHex("#22c55e")}):Play()
+        Tween(Button, .1, {BackgroundColor3 = hoverColor}):Play()
     end)
+
     Creator.AddSignal(Button.TextButton.MouseLeave, function()
-        Tween(Button, .1, {BackgroundColor3 = Color3.fromHex("#16a34a")}):Play()
+        Tween(Button, .1, {BackgroundColor3 = currentColor}):Play()
     end)
-    
-    local DragModule = Creator.Drag(Container)
-    
-    
+
     function OpenButtonMain:Visible(v)
         Container.Visible = v
     end
-    
+
     function OpenButtonMain:SetScale(scale)
         UIScale.Scale = scale
     end
-    
+
     function OpenButtonMain:Edit(OpenButtonConfig)
-        local OpenButtonModule = {
-            Title = OpenButtonConfig.Title or "$",
-            Icon = OpenButtonConfig.Icon,
-            Enabled = OpenButtonConfig.Enabled,
-            Position = OpenButtonConfig.Position,
-            OnlyIcon = OpenButtonConfig.OnlyIcon ~= false,
-            Draggable = OpenButtonConfig.Draggable == true,
-            OnlyMobile = OpenButtonConfig.OnlyMobile,
-            CornerRadius = OpenButtonConfig.CornerRadius or UDim.new(1, 0),
-            StrokeThickness = OpenButtonConfig.StrokeThickness or 1,
-            Scale = OpenButtonConfig.Scale or 1,
-            Color = OpenButtonConfig.Color 
-                or ColorSequence.new(Color3.fromHex("#22c55e"), Color3.fromHex("#16a34a")),
-        }
-        
-        -- wtf lol
-        
-        if OpenButtonModule.Enabled == false then
-            Window.IsOpenButtonEnabled = false
-        end
-        
-        if OpenButtonModule.OnlyMobile ~= false then
-            OpenButtonModule.OnlyMobile = false
-        end
-        
-        
-        if OpenButtonModule.Draggable == false and Drag and Divider then
-            Drag.Visible = OpenButtonModule.Draggable
-            Divider.Visible = OpenButtonModule.Draggable
-            
-            if DragModule then
-                DragModule:Set(OpenButtonModule.Draggable)
-            end
-        end
-        
-        if OpenButtonModule.Position and Container then
-            Container.Position = OpenButtonModule.Position
-        end
-        
-        if OpenButtonModule.OnlyIcon == true and Title then
-            Title.Visible = true
-            Button.TextButton.UIPadding.PaddingLeft = UDim.new(0,0)
-            Button.TextButton.UIPadding.PaddingRight = UDim.new(0,0)
-        elseif OpenButtonModule.OnlyIcon == false then
-            Title.Visible = true
-            Button.TextButton.UIPadding.PaddingLeft = UDim.new(0,7+4)
-            Button.TextButton.UIPadding.PaddingRight = UDim.new(0,7+4)
-        end
-        
-        --OpenButtonMain:Visible((not OpenButtonModule.OnlyMobile) or (not Window.IsPC))
-        
-        --if not OpenButton.Visible then return end
-        
-        if Title then
-            if OpenButtonModule.Title then
-                Title.Text = OpenButtonModule.Title
-                Creator:ChangeTranslationKey(Title, OpenButtonModule.Title)
-            elseif OpenButtonModule.Title == nil then
-                --Title.Visible = false
-            end
-        end
-        
-        if OpenButtonModule.Icon then
-            OpenButtonMain:SetIcon(OpenButtonModule.Icon)
-        elseif Icon then
-            Icon:Destroy()
-            Icon = nil
+        OpenButtonConfig = OpenButtonConfig or {}
+
+        if OpenButtonConfig.Enabled ~= nil then
+            Window.IsOpenButtonEnabled = OpenButtonConfig.Enabled ~= false
         end
 
-        if Title then
-            Title.Text = OpenButtonModule.Title or "$"
+        if OpenButtonConfig.Position and Container then
+            Container.Position = OpenButtonConfig.Position
         end
 
-        local firstColor = OpenButtonModule.Color.Keypoints[1] and OpenButtonModule.Color.Keypoints[1].Value
-            or Color3.fromHex("#22c55e")
-        Button.BackgroundColor3 = firstColor
-        Button.UIStroke.Color = firstColor
-        if Glow and Glow:FindFirstChild("UIGradient") then
-            Glow.UIGradient.Color = OpenButtonModule.Color
+        if OpenButtonConfig.Icon ~= nil then
+            OpenButtonMain:SetIcon(OpenButtonConfig.Icon)
         end
 
-        Button.UICorner.CornerRadius = OpenButtonModule.CornerRadius
-        Button.TextButton.UICorner.CornerRadius = UDim.new(OpenButtonModule.CornerRadius.Scale, OpenButtonModule.CornerRadius.Offset-4)
-        Button.UIStroke.Thickness = OpenButtonModule.StrokeThickness
-        
-        OpenButtonMain:SetScale(OpenButtonModule.Scale)
+        currentColor = resolveButtonColor(OpenButtonConfig.Color)
+        hoverColor = currentColor:Lerp(Color3.new(1, 1, 1), 0.15)
+
+        Button.BackgroundColor3 = currentColor
+        Button.UIStroke.Color = currentColor:Lerp(Color3.new(1, 1, 1), 0.2)
+
+        OpenButtonMain:SetScale(OpenButtonConfig.Scale or 1)
     end
 
     return OpenButtonMain
 end
-
-
 
 return OpenButton

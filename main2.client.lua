@@ -20,7 +20,7 @@ do
         if RunService:IsStudio() or not writefile then
             WindUI = require(ReplicatedStorage:WaitForChild("WindUI"):WaitForChild("Init"))
         else
-            WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+            WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/main/dist/main.lua"))()
         end
     end
 end
@@ -213,17 +213,17 @@ TabSettings:Dropdown({
             Window:SetAuthor("Loading...")
             if not CachedPRData[PRNumber] then
                 local Success, Data = pcall(function()
-                    return Remote:InvokeServer("Footagesus", "WindUI", PRNumber)
+                    return Remote:InvokeServer("RblxScriptsOG", "Wind-UI-Fork-For-Smile-Hub", PRNumber)
                 end)
                 
                 if Success and Data and Data.html_url then
                     CachedPRData[PRNumber] = Data
-                    Window:SetAuthor("by " .. Data.user.login .. " | https://github.com/Footagesus/WindUI/pull/" .. PRNumber)
+                    Window:SetAuthor("by " .. Data.user.login .. " | https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/pull/" .. PRNumber)
                 end
                 print(Data)
             else
                 local Data = CachedPRData[PRNumber]
-                Window:SetAuthor("by " .. Data.user.login .. " | https://github.com/Footagesus/WindUI/pull/" .. PRNumber)
+                Window:SetAuthor("by " .. Data.user.login .. " | https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/pull/" .. PRNumber)
                 print(Data)
             end
         else
@@ -244,3 +244,4 @@ local Section = Tab1:Section({
     Icon = "rbxassetid://77799629590713",
     IconThemed = true,
 })
+

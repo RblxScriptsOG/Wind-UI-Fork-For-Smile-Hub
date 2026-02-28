@@ -5,7 +5,7 @@ return [[
     "name": "windui",
     "version": "1.6.64",
     "main": "./dist/main.lua",
-    "repository": "https://github.com/Footagesus/WindUI",
+    "repository": "https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub",
     "discord": "https://discord.gg/ftgs-development-hub-1300692552005189632",
     "author": "Footagesus",
     "description": "Roblox UI Library for scripts",
@@ -32,3 +32,4 @@ return [[
     }
 }
 ]]
+

@@ -23,7 +23,7 @@ do
         if cloneref(game:GetService("RunService")):IsStudio() then
             WindUI = require(cloneref(ReplicatedStorage:WaitForChild("WindUI"):WaitForChild("Init")))
         else
-            WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
+            WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/main/dist/main.lua"))()
         end
     end
 end
@@ -90,19 +90,11 @@ local Window = WindUI:CreateWindow({
     HideSearchBar = false,
     
     OpenButton = {
-        Title = "$",
-        CornerRadius = UDim.new(1,0), -- fully rounded
-        StrokeThickness = 1,
-        Enabled = true, -- enable or disable openbutton
-        Draggable = false,
-        OnlyIcon = true,
-        OnlyMobile = false,
-        Scale = 1,
-        
-        Color = ColorSequence.new( -- gradient
+        Icon = "solar:folder-2-bold-duotone",
+        Color = ColorSequence.new(
             Color3.fromHex("#22c55e"),
             Color3.fromHex("#16a34a")
-        )
+        ),
     },
     Topbar = {
         Height = 44,
@@ -907,7 +899,7 @@ if not RunService:IsStudio() and writefile and printidentity() then
             Border = true,
         })
         
-        -- All elements are taken from the official documentation: https://footagesus.github.io/WindUI-Docs/docs
+        -- All elements are taken from the documentation: https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub/tree/main/docs
         
         -- Saving elements to the config using `Flag`
         
@@ -1306,3 +1298,4 @@ dropdownA = Tabs.ExampleTab:Dropdown({
     Value = { "All" },
     Callback = function(option) end,
 })
+

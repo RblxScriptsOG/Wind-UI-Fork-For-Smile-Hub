@@ -9,7 +9,7 @@
     To view the source code, see the `src/` folder on the official GitHub repository.
     
     Author: Footagesus (Footages, .ftgs, oftgs)
-    Github: https://github.com/Footagesus/WindUI
+    Github: https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub
     Discord: https://discord.gg/ftgs-development-hub-1300692552005189632
     License: MIT
 ]]
@@ -2038,7 +2038,7 @@ return[[
     "name": "windui",
     "version": "1.6.64",
     "main": "./dist/main.lua",
-    "repository": "https://github.com/Footagesus/WindUI",
+    "repository": "https://github.com/RblxScriptsOG/Wind-UI-Fork-For-Smile-Hub",
     "discord": "https://discord.gg/ftgs-development-hub-1300692552005189632",
     "author": "Footagesus",
     "description": "Roblox UI Library for scripts",
@@ -13368,3 +13368,4 @@ return f
 end
 
 return ae
+
