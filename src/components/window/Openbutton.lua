@@ -6,7 +6,13 @@ local Tween = Creator.Tween
 
 local DEFAULT_COLOR = Color3.fromHex("#16a34a")
 
-local function resolveButtonColor(colorValue)
+local function resolveButtonColor(openButtonConfig)
+    local colorValue = openButtonConfig and (
+        openButtonConfig.CircleColor
+        or openButtonConfig.BackgroundColor
+        or openButtonConfig.Color
+    )
+
     if typeof(colorValue) == "Color3" then
         return colorValue
     end
@@ -36,7 +42,7 @@ function OpenButton.New(Window)
         AnchorPoint = Vector2.new(0.5, 0.5),
         Parent = Window.Parent,
         BackgroundTransparency = 1,
-        Active = true,
+        Active = false,
         Visible = false,
     })
 
@@ -56,12 +62,6 @@ function OpenButton.New(Window)
         UIScale,
         New("UICorner", {
             CornerRadius = UDim.new(1, 0)
-        }),
-        New("UIStroke", {
-            Thickness = 1,
-            ApplyStrokeMode = "Border",
-            Color = currentColor:Lerp(Color3.new(1, 1, 1), 0.2),
-            Transparency = 0.15,
         }),
         New("TextButton", {
             AutomaticSize = "None",
@@ -150,11 +150,10 @@ function OpenButton.New(Window)
             OpenButtonMain:SetIcon(iconToUse)
         end
 
-        currentColor = resolveButtonColor(OpenButtonConfig.Color)
+        currentColor = resolveButtonColor(OpenButtonConfig)
         hoverColor = currentColor:Lerp(Color3.new(1, 1, 1), 0.15)
 
         Button.BackgroundColor3 = currentColor
-        Button.UIStroke.Color = currentColor:Lerp(Color3.new(1, 1, 1), 0.2)
 
         OpenButtonMain:SetScale(OpenButtonConfig.Scale or 1)
     end

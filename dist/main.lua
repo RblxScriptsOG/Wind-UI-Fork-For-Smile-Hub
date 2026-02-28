@@ -4726,6 +4726,22 @@ local ae=(cloneref or clonereference or function(ae)return ae end)
 
 ae(game:GetService"UserInputService")
 
+local openButtonDefaultColor=Color3.fromHex"16a34a"
+
+local function resolveOpenButtonColor(af)
+local ag=af and(af.CircleColor or af.BackgroundColor or af.Color)
+if typeof(ag)=="Color3"then
+return ag
+end
+if typeof(ag)=="ColorSequence"then
+local ah=ag.Keypoints[1]
+if ah then
+return ah.Value
+end
+end
+return openButtonDefaultColor
+end
+
 
 function aa.New(af)
 local ag={
@@ -4758,6 +4774,7 @@ local aj=ac("Frame",{
 Size=UDim2.new(0,36,0,36),
 BackgroundTransparency=1,
 Name="Drag",
+Visible=false,
 },{
 ac("ImageLabel",{
 Image=ab.Icon"move"[1],
@@ -4779,6 +4796,7 @@ Position=UDim2.new(0,36,0.5,0),
 AnchorPoint=Vector2.new(0,0.5),
 BackgroundColor3=Color3.new(1,1,1),
 BackgroundTransparency=.9,
+Visible=false,
 })
 
 local al=ac("Frame",{
@@ -4787,7 +4805,7 @@ Position=UDim2.new(0.5,0,0,28),
 AnchorPoint=Vector2.new(0.5,0.5),
 Parent=af.Parent,
 BackgroundTransparency=1,
-Active=true,
+Active=false,
 Visible=false,
 })
 
@@ -4803,17 +4821,17 @@ Parent=al,
 Active=false,
 BackgroundTransparency=.25,
 ZIndex=99,
-BackgroundColor3=Color3.new(0,0,0),
+BackgroundColor3=openButtonDefaultColor,
 },{
 am,
 ac("UICorner",{
 CornerRadius=UDim.new(1,0)
 }),
 ac("UIStroke",{
-Thickness=1,
+Thickness=0,
 ApplyStrokeMode="Border",
 Color=Color3.new(1,1,1),
-Transparency=0,
+Transparency=1,
 },{
 ac("UIGradient",{
 Color=ColorSequence.new(Color3.fromHex"40c9ff",Color3.fromHex"e81cff")
@@ -4902,6 +4920,9 @@ ad(an.TextButton,.1,{BackgroundTransparency=1}):Play()
 end)
 
 local ao=ab.Drag(al)
+if ao then
+ao:Set(false)
+end
 
 
 function ag.Visible(ap,aq)
@@ -4919,13 +4940,12 @@ Icon=aq.Icon or af.Icon,
 Enabled=aq.Enabled,
 Position=aq.Position,
 OnlyIcon=true,
-Draggable=aq.Draggable or nil,
+Draggable=false,
 OnlyMobile=aq.OnlyMobile,
-CornerRadius=aq.CornerRadius or UDim.new(1,0),
-StrokeThickness=aq.StrokeThickness or 2,
+CornerRadius=UDim.new(1,0),
+StrokeThickness=0,
 Scale=aq.Scale or 1,
-Color=aq.Color
-or ColorSequence.new(Color3.fromHex"40c9ff",Color3.fromHex"e81cff"),
+Color=resolveOpenButtonColor(aq),
 }
 
 
@@ -4941,12 +4961,12 @@ af.IsPC=false
 end
 
 
-if ar.Draggable==false and aj and ak then
-aj.Visible=ar.Draggable
-ak.Visible=ar.Draggable
+if aj and ak then
+aj.Visible=false
+ak.Visible=false
 
 if ao then
-ao:Set(ar.Draggable)
+ao:Set(false)
 end
 end
 
@@ -4981,14 +5001,11 @@ if ar.Icon then
 ag:SetIcon(ar.Icon)
 end
 
-an.UIStroke.UIGradient.Color=ar.Color
-if Glow then
-Glow.UIGradient.Color=ar.Color
-end
-
-an.UICorner.CornerRadius=ar.CornerRadius
-an.TextButton.UICorner.CornerRadius=UDim.new(ar.CornerRadius.Scale,ar.CornerRadius.Offset-4)
-an.UIStroke.Thickness=ar.StrokeThickness
+an.BackgroundColor3=ar.Color
+an.UICorner.CornerRadius=UDim.new(1,0)
+an.TextButton.UICorner.CornerRadius=UDim.new(1,-4)
+an.UIStroke.Thickness=0
+an.UIStroke.Transparency=1
 
 ag:SetScale(ar.Scale)
 end
